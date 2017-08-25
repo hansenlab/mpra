@@ -1,8 +1,9 @@
 setClass("MPRAset", contains = "SummarizedExperiment")
 
 setValidity("MPRAset", function(object) {
-    ## Required assays
+    ## Required information: DNA, RNA, and element ID
     msg <- validMsg(NULL, .check_assay_names(object, c("dna", "rna")))
+    msg <- validMsg(msg, !is.null(eid(object)))
     ## If barcode is supplied, then all elements must be unique
     bc <- barcode(object)
     if (!is.null(bc)) {
@@ -40,7 +41,7 @@ dna <- function(object, aggregate = FALSE) {
     }
 }
 
-rna <- function(object) {
+rna <- function(object, aggregate = FALSE) {
     .is_mpra_or_stop(object)
     raw <- assay(object, "rna")
     if (aggregate) {
