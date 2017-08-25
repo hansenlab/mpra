@@ -1,0 +1,26 @@
+Package: mpra
+Version: 0.0.1
+Title: Analyze massively parallel reporter assays
+Description: Tools to analyze & visualize massively parallel report assays (MPRA).
+Authors@R: c(
+	   person("Leslie", "Myint", role = c("cre", "aut"), email = "lmyint1@jhu.edu"),
+	   person(c("Kasper", "Daniel"), "Hansen", role = "aut"))
+Depends:
+	methods,
+	BiocGenerics,
+	SummarizedExperiment,
+	limma
+Suggests:
+	BiocStyle,
+	knitr,
+	rmarkdown
+Imports:  
+Collate:
+	mpra_set.R
+	utils.R
+	fit.R
+VignetteBuilder: knitr
+License: Artistic-2.0
+URL: https://github.com/hansenlab/mpra
+BugReports: https://github.com/hansenlab/mpra/issues
+biocViews: Software
