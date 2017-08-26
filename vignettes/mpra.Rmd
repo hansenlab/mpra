@@ -1,0 +1,38 @@
+---
+title: "The mpra User's Guide"
+author: "Leslie Myint, Kasper Daniel Hansen"
+date: "`r doc_date()`"
+package: "`r pkg_ver(mpra)`"
+bibliography: mpra.bib
+abstract: >
+  A comprehensive guide to using the mpra package for analyzing
+  massively parallel reporter assays
+vignette: >
+  %\VignetteIndexEntry{mpra User's Guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output: 
+  BiocStyle::html_document
+---
+
+# Introduction
+
+Something. Cite [@voom]
+
+# Dependencies
+
+This document has the following dependencies
+
+```{r dependencies, warning=FALSE, message=FALSE}
+library(mpra)
+```
+
+# Sessioninfo
+
+```{r sessionInfo, results='asis', echo=FALSE}
+sessionInfo()
+```
+
+# References
+
+
