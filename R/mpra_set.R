@@ -1,6 +1,6 @@
-setClass("MPRAset", contains = "SummarizedExperiment")
+setClass("MPRASet", contains = "SummarizedExperiment")
 
-setValidity("MPRAset", function(object) {
+setValidity("MPRASet", function(object) {
     ## Required information: DNA, RNA, and element ID
     msg <- validMsg(NULL, .check_assay_names(object, c("dna", "rna")))
     msg <- validMsg(msg, !is.null(eid(object)))
@@ -12,17 +12,17 @@ setValidity("MPRAset", function(object) {
     if (is.null(msg)) TRUE else msg
 })
 
-MPRAset <- function(dna = new("matrix"), rna = new("matrix"),
+MPRASet <- function(dna = new("matrix"), rna = new("matrix"),
                     barcode = new("DNAStringSet"), eid = new("character"),
                     eseq = new("DNAStringSet"), ...) {
     assays <- SimpleList(dna = dna, rna = rna)
 	rowData <- DataFrame(barcode = barcode, eid = eid, eseq = eseq)
-    new("MPRAset",
+    new("MPRASet",
         SummarizedExperiment(assays = assays, rowData = rowData, ...)
     )
 }
 
-setMethod("show", signature(object = "MPRAset"),
+setMethod("show", signature(object = "MPRASet"),
           function(object) {
     callNextMethod()
 })

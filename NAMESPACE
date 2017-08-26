@@ -1,0 +1,6 @@
+import(methods)
+import(BiocGenerics)
+import(SummarizedExperiment)
+
+exportClasses("MPRASet")
+exportMethods("show")

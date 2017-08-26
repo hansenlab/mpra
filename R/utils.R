@@ -1,6 +1,6 @@
 .is_mpra_or_stop <- function(object) {
-    if (!is(object, "MPRAset"))
-        stop(sprintf("object is of class '%s', but needs to be of class 'MPRAset'", class(object)))
+    if (!is(object, "MPRASet"))
+        stop(sprintf("object is of class '%s', but needs to be of class 'MPRASet'", class(object)))
 }
 
 .check_assay_names <- function(object, names) {
