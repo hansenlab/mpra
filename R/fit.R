@@ -1,13 +1,13 @@
-mpralm <- function(object, design, blocks = NULL, model_type = c("indep_groups", "corr_groups"), ...) {
+mpralm <- function(object, design, block = NULL, model_type = c("indep_groups", "corr_groups"), ...) {
     .is_mpra_or_stop(object)
 
     if (model_type=="indep_groups") {
         fit <- fit_standard(object = object, design = design, ...)
     } else if (model_type=="corr_groups") {
-        if (is.null(blocks)) {
-            stop("blocks must be supplied for the corr_groups model type")
+        if (is.null(block)) {
+            stop("'block' must be supplied for the corr_groups model type")
         }
-        fit <- fit_corr(object = object, design = design, blocks = blocks, ...)
+        fit <- fit_corr(object = object, design = design, block = block, ...)
     }
     return(fit)
 }
@@ -55,7 +55,7 @@ fit_standard <- function(object, design, return_elist = FALSE, return_weights = 
     }
 }
 
-fit_corr <- function(object, design, blocks, plot = TRUE, span = 0.4, ...) {
+fit_corr <- function(object, design, block = NULL, plot = TRUE, span = 0.4, ...) {
     log_dna <- log2(dna(object) + 1)
     logr <- log2(rna(object) + 1) - log_dna
 
@@ -63,7 +63,7 @@ fit_corr <- function(object, design, blocks, plot = TRUE, span = 0.4, ...) {
     w <- get_precision_weights(logr = logr, log_dna = log_dna, plot = plot, ...)
 
     ## Estimate correlation between element versions that are paired
-    corfit <- duplicateCorrelation(logr, design = design, ndups = 1, block = blocks)
+    corfit <- duplicateCorrelation(logr, design = design, ndups = 1, block = block)
 
     elist <- new("EList", list(E = logr, weights = w, design = design))
     fit <- lmFit(elist, design, block = block, correlation = corfit$consensus)

@@ -14,7 +14,9 @@ Suggests:
 	BiocStyle,
 	knitr,
 	rmarkdown
-Imports:  
+Imports:
+	S4Vectors,
+	scales
 Collate:
 	mpra_set.R
 	utils.R

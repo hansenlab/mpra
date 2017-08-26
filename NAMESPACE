@@ -1,6 +1,10 @@
 import(methods)
-import(BiocGenerics)
+import(BiocGenerics, except = "plotMA")
 import(SummarizedExperiment)
-
+import(limma, except = "plotMA")
+import(S4Vectors)
+importFrom("scales", "alpha")
+importFrom("graphics", "lines")
+importFrom("stats", "approxfun", "lowess")
 exportClasses("MPRASet")
 exportMethods("show")
