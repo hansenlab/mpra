@@ -12,7 +12,7 @@ mpralm <- function(object, design, block = NULL, model_type = c("indep_groups", 
     return(fit)
 }
 
-get_precision_weights <- function(logr, log_dna, plot = TRUE, ...) {
+get_precision_weights <- function(logr, log_dna, span = 0.4, plot = TRUE, ...) {
     ## Obtain element-specific residual SDs
     fit <- lmFit(logr, design = design, ...)
     s <- fit$sigma
@@ -40,7 +40,8 @@ fit_standard <- function(object, design, return_elist = FALSE, return_weights = 
     logr <- log2(rna(object) + 1) - log_dna
 
     ## Estimate mean-variance relationship to get precision weights
-    w <- get_precision_weights(logr = logr, log_dna = log_dna, plot = plot, ...)
+    w <- get_precision_weights(logr = logr, log_dna = log_dna,
+                               span = span, plot = plot, ...)
 
     elist <- new("EList", list(E = logr, weights = w, design = design))
 
@@ -60,7 +61,8 @@ fit_corr <- function(object, design, block = NULL, plot = TRUE, span = 0.4, ...)
     logr <- log2(rna(object) + 1) - log_dna
 
     ## Estimate mean-variance relationship to get precision weights
-    w <- get_precision_weights(logr = logr, log_dna = log_dna, plot = plot, ...)
+    w <- get_precision_weights(logr = logr, log_dna = log_dna,
+                               span = span, plot = plot, ...)
 
     ## Estimate correlation between element versions that are paired
     corfit <- duplicateCorrelation(logr, design = design, ndups = 1, block = block)
