@@ -36,8 +36,8 @@ get_precision_weights <- function(logr, log_dna, span = 0.4, plot = TRUE, ...) {
 }
 
 fit_standard <- function(object, design, return_elist = FALSE, return_weights = FALSE, plot = TRUE, span = 0.4, ...) {
-    log_dna <- log2(dna(object) + 1)
-    logr <- log2(rna(object) + 1) - log_dna
+    log_dna <- log2(getDNA(object) + 1)
+    logr <- log2(getRNA(object) + 1) - log_dna
 
     ## Estimate mean-variance relationship to get precision weights
     w <- get_precision_weights(logr = logr, log_dna = log_dna,
@@ -57,8 +57,8 @@ fit_standard <- function(object, design, return_elist = FALSE, return_weights = 
 }
 
 fit_corr <- function(object, design, block = NULL, plot = TRUE, span = 0.4, ...) {
-    log_dna <- log2(dna(object) + 1)
-    logr <- log2(rna(object) + 1) - log_dna
+    log_dna <- log2(getDNA(object) + 1)
+    logr <- log2(getRNA(object) + 1) - log_dna
 
     ## Estimate mean-variance relationship to get precision weights
     w <- get_precision_weights(logr = logr, log_dna = log_dna,

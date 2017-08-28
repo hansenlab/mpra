@@ -2,7 +2,7 @@ setClass("MPRASet", contains = "SummarizedExperiment")
 
 setValidity("MPRASet", function(object) {
     ## Required information: DNA, RNA, and element ID
-    msg <- validMsg(NULL, .check_assay_names(object, c("dna", "rna")))
+    msg <- validMsg(NULL, .check_assay_names(object, c("DNA", "RNA")))
     msg <- validMsg(msg, !is.null(eid(object)))
     ## If barcode is supplied, then all elements must be unique
     bc <- barcode(object)
@@ -12,10 +12,10 @@ setValidity("MPRASet", function(object) {
     if (is.null(msg)) TRUE else msg
 })
 
-MPRASet <- function(dna = new("matrix"), rna = new("matrix"),
+MPRASet <- function(DNA = new("matrix"), RNA = new("matrix"),
                     barcode = new("DNAStringSet"), eid = new("character"),
                     eseq = new("DNAStringSet"), ...) {
-    assays <- SimpleList(dna = dna, rna = rna)
+    assays <- SimpleList(DNA = DNA, RNA = RNA)
 	rowData <- DataFrame(barcode = barcode, eid = eid, eseq = eseq)
     new("MPRASet",
         SummarizedExperiment(assays = assays, rowData = rowData, ...)
@@ -27,9 +27,9 @@ setMethod("show", signature(object = "MPRASet"),
     callNextMethod()
 })
 
-dna <- function(object, aggregate = FALSE) {
+getDNA <- function(object, aggregate = FALSE) {
     .is_mpra_or_stop(object)
-    raw <- assay(object, "dna")
+    raw <- assay(object, "DNA")
     if (aggregate) {
         eid <- eid(object)
         by_out <- by(raw, eid, colSums)
@@ -41,9 +41,9 @@ dna <- function(object, aggregate = FALSE) {
     }
 }
 
-rna <- function(object, aggregate = FALSE) {
+getRNA <- function(object, aggregate = FALSE) {
     .is_mpra_or_stop(object)
-    raw <- assay(object, "rna")
+    raw <- assay(object, "RNA")
     if (aggregate) {
         eid <- eid(object)
         by_out <- by(raw, eid, colSums)

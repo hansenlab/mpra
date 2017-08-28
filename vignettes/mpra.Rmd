@@ -2,7 +2,7 @@
 title: "The mpra User's Guide"
 author: "Leslie Myint, Kasper Daniel Hansen"
 date: "`r doc_date()`"
-package: "`r pkg_ver(mpra)`"
+package: "`r pkg_ver('mpra')`"
 bibliography: mpra.bib
 abstract: >
   A comprehensive guide to using the mpra package for analyzing
