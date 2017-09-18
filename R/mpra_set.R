@@ -16,7 +16,15 @@ MPRASet <- function(DNA = new("matrix"), RNA = new("matrix"),
                     barcode = new("DNAStringSet"), eid = new("character"),
                     eseq = new("DNAStringSet"), ...) {
     assays <- SimpleList(DNA = DNA, RNA = RNA)
-	rowData <- DataFrame(barcode = barcode, eid = eid, eseq = eseq)
+    if (is.null(barcode) & is.null(eseq)) {
+        rowData <- DataFrame(eid = eid)
+    } else if (is.null(barcode) & !is.null(eseq)) {
+        rowData <- DataFrame(eid = eid, eseq = eseq)
+    } else if (!is.null(barcode) & is.null(eseq)) {
+        rowData <- DataFrame(eid = eid, barcode = barcode)
+    } else {
+        rowData <- DataFrame(eid = eid, barcode = barcode, eseq = eseq)
+    }
     new("MPRASet",
         SummarizedExperiment(assays = assays, rowData = rowData, ...)
     )
