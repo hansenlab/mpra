@@ -4,17 +4,20 @@ setValidity("MPRASet", function(object) {
     ## Required information: DNA, RNA, and element ID
     msg <- validMsg(NULL, .check_assay_names(object, c("DNA", "RNA")))
     msg <- validMsg(msg, !is.null(eid(object)))
-    ## If barcode is supplied, then all elements must be unique
-    bc <- barcode(object)
-    if (!is.null(bc)) {
-        msg <- validMsg(msg, !any(duplicated(bc)))
+    if("barcode" %in% names(rowData(object))) {
+        if(!is.character(rowData(object)$barcode) || anyDuplicated(rowData(object)$barcode))
+            mdg <- validMsg(msg, "`barcode` should be a character vector without duplicate values.")
     }
+    if("eseq" %in% names(rowData(object)) && !is.character(rowData(object)$eseq))
+        msg <- validMsg(msg, "`eseq` should be a character vector")
+    if(! "eid" %in% names(rowData(object)) || !is.character(rowData(object)$eid))
+        msg <- validMsg(msg, "`eid` should be present and be a character vector")
     if (is.null(msg)) TRUE else msg
 })
 
 MPRASet <- function(DNA = new("matrix"), RNA = new("matrix"),
-                    barcode = new("DNAStringSet"), eid = new("character"),
-                    eseq = new("DNAStringSet"), ...) {
+                    barcode = new("character"), eid = new("character"),
+                    eseq = new("character"), ...) {
     assays <- SimpleList(DNA = DNA, RNA = RNA)
     if (is.null(barcode) & is.null(eseq)) {
         rowData <- DataFrame(eid = eid)
@@ -39,7 +42,7 @@ getDNA <- function(object, aggregate = FALSE) {
     .is_mpra_or_stop(object)
     raw <- assay(object, "DNA")
     if (aggregate) {
-        eid <- eid(object)
+        eid <- getEid(object)
         by_out <- by(raw, eid, colSums)
         agg <- do.call("rbind", by_out)
         rownames(agg) <- names(by_out)
@@ -53,7 +56,7 @@ getRNA <- function(object, aggregate = FALSE) {
     .is_mpra_or_stop(object)
     raw <- assay(object, "RNA")
     if (aggregate) {
-        eid <- eid(object)
+        eid <- getEid(object)
         by_out <- by(raw, eid, colSums)
         agg <- do.call("rbind", by_out)
         rownames(agg) <- names(by_out)
@@ -63,17 +66,18 @@ getRNA <- function(object, aggregate = FALSE) {
     }
 }
 
-barcode <- function(object) {
+getBarcode <- function(object) {
     .is_mpra_or_stop(object)
     rowData(object)$barcode
 }
 
-eid <- function(object) {
+getEid <- function(object) {
     .is_mpra_or_stop(object)
     rowData(object)$eid
 }
 
-eseq <- function(object) {
+getEseq <- function(object) {
     .is_mpra_or_stop(object)
     rowData(object)$eseq
 }
+

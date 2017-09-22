@@ -10,4 +10,5 @@ importFrom("stats", "approxfun", "lowess")
 
 exportClasses("MPRASet")
 exportMethods("show")
-export(getRNA, getDNA, MPRASet)
+export(MPRASet, getRNA, getDNA, getBarcode, getEid, getEseq)
+# mpralm, fit_precision_weights, fit_standard, fit_corr

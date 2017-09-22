@@ -9,6 +9,7 @@
 \packageDescription{mpra}
 }
 \details{
+  FIXME
 }
 \author{
 \packageAuthor{mpra}
