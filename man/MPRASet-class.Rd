@@ -31,12 +31,12 @@ getEseq(object)
   \item{object}{A \code{MPRASet} object.}
   \item{aggregate}{A \code{logical} indicating if data should be
     aggregated to the element level (by summing across barcodes).}
-  \item{DNA}{FIXME}
-  \item{RNA}{FIXME}
-  \item{barcode}{FIXME}
-  \item{eid}{FIXME}
-  \item{eseq}{FIXME}
-  \item{...}{FIXME}
+  \item{DNA}{A matrix of DNA counts where rows correspond to elements or individual barcodes and columns to samples of conditions being compared.}
+  \item{RNA}{A matrix of RNA counts where rows correspond to elements or individual barcodes and columns to samples of conditions being compared.}
+  \item{barcode}{If barcodes are supplied, a \code{character} vector of length equal to the number of rows in \code{DNA} and \code{RNA} containing the barcode sequences or identifiers. \code{NULL} otherwise.}
+  \item{eid}{A \code{character} vector of length equal to the number of rows in \code{DNA} and \code{RNA} containing the enhancer identifiers corresponding to each row.}
+  \item{eseq}{If supplied, a \code{character} vector of length equal to the number of rows in \code{DNA} and \code{RNA} containing the enhancer sequences corresponding to the regulatory elements in each row. \code{NULL} otherwise.}
+  \item{...}{Further arguments to be passed to \code{SummarizedExperiment}.}
 }
 \section{Slots}{
   Slots are as described in a \code{SummarizedExperiment}.  Of
@@ -60,9 +60,6 @@ Class \code{"\linkS4class{SummarizedExperiment}"}, directly.
 \item{\code{getEid}:}{Gets the element ID}
 \item{\code{getEseq}:}{Gets the element sequence, if present.}
 }
-}
-\references{
-  FIXME
 }
 \seealso{
   \code{\linkS4class{SummarizedExperiment}} for the basic class that is
