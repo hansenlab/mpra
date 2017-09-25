@@ -1,18 +1,20 @@
-mpralm <- function(object, design, block = NULL, model_type = c("indep_groups", "corr_groups"), ...) {
+mpralm <- function(object, aggregate = c("mean", "sum", "none"), normalize = TRUE, design, block = NULL, model_type = c("indep_groups", "corr_groups"), ...) {
     .is_mpra_or_stop(object)
 
+    aggregate <- match.arg(aggregate)
+
     if (model_type=="indep_groups") {
-        fit <- fit_standard(object = object, design = design, ...)
+        fit <- fit_standard(object = object, design = design, aggregate = aggregate, normalize = normalize, ...)
     } else if (model_type=="corr_groups") {
         if (is.null(block)) {
             stop("'block' must be supplied for the corr_groups model type")
         }
-        fit <- fit_corr(object = object, design = design, block = block, ...)
+        fit <- fit_corr(object = object, design = design, block = block, aggregate = aggregate, normalize = normalize, ...)
     }
     return(fit)
 }
 
-get_precision_weights <- function(logr, log_dna, span = 0.4, plot = TRUE, ...) {
+get_precision_weights <- function(logr, design, log_dna, span = 0.4, plot = TRUE, ...) {
     ## Obtain element-specific residual SDs
     fit <- lmFit(logr, design = design, ...)
     s <- fit$sigma
@@ -35,12 +37,63 @@ get_precision_weights <- function(logr, log_dna, span = 0.4, plot = TRUE, ...) {
     return(w)
 }
 
-fit_standard <- function(object, design, return_elist = FALSE, return_weights = FALSE, plot = TRUE, span = 0.4, ...) {
-    log_dna <- log2(getDNA(object) + 1)
-    logr <- log2(getRNA(object) + 1) - log_dna
+compute_logratio <- function(object, aggregate = c("mean", "sum", "none")) {
+    aggregate <- match.arg(aggregate)
+    if (aggregate=="sum") {
+        dna <- getDNA(object, aggregate = TRUE)
+        rna <- getRNA(object, aggregate = TRUE)
+        logr <- log2(rna + 1) - log2(dna + 1)
+    } else if (aggregate=="mean") {
+        dna <- getDNA(object, aggregate = FALSE)
+        rna <- getRNA(object, aggregate = FALSE)
+        eid <- getEid(object)
+        logr <- log2(rna + 1) - log2(dna + 1)
+
+        by_out <- by(logr, eid, colMeans, na.rm = TRUE)
+        logr <- do.call("rbind", by_out)
+        rownames(logr) <- names(by_out)
+    } else if (aggregate=="none") {
+        dna <- getDNA(object, aggregate = FALSE)
+        rna <- getRNA(object, aggregate = FALSE)
+        logr <- log2(rna + 1) - log2(dna + 1)
+    }
+    return(logr)
+}
+
+normalize_counts <- function(object, block = NULL) {
+    ## Perform total count normalization
+    dna <- getDNA(object, aggregate = FALSE)
+    rna <- getRNA(object, aggregate = FALSE)
+
+    if (is.null(block)) {
+        libsizes_dna <- colSums(dna, na.rm = TRUE)
+        libsizes_rna <- colSums(rna, na.rm = TRUE)
+    } else {
+        libsizes_dna <- tapply(colSums(dna, na.rm = TRUE), block, sum, na.rm = TRUE)
+        libsizes_dna <- libsizes_dna[block]
+        libsizes_rna <- tapply(colSums(rna, na.rm = TRUE), block, sum, na.rm = TRUE)
+        libsizes_rna <- libsizes_rna[block]
+    }
+    dna_norm <- round(sweep(dna, 2, libsizes_dna, FUN = "/")*10e6)
+    rna_norm <- round(sweep(rna, 2, libsizes_rna, FUN = "/")*10e6)
+    
+    assay(object, "DNA") <- dna_norm
+    assay(object, "RNA") <- rna_norm
+
+    return(object)
+}
+
+fit_standard <- function(object, aggregate = c("mean", "sum", "none"), design, normalize = TRUE, return_elist = FALSE, return_weights = FALSE, plot = TRUE, span = 0.4, ...) {
+    aggregate <- match.arg(aggregate)
+
+    if (normalize) {
+        object <- normalize_counts(object)
+    }
+    logr <- compute_logratio(object, aggregate = aggregate)
+    log_dna <- log2(getDNA(object, aggregate = TRUE) + 1)
 
     ## Estimate mean-variance relationship to get precision weights
-    w <- get_precision_weights(logr = logr, log_dna = log_dna,
+    w <- get_precision_weights(logr = logr, design = design, log_dna = log_dna,
                                span = span, plot = plot, ...)
 
     elist <- new("EList", list(E = logr, weights = w, design = design))
@@ -56,12 +109,17 @@ fit_standard <- function(object, design, return_elist = FALSE, return_weights = 
     }
 }
 
-fit_corr <- function(object, design, block = NULL, plot = TRUE, span = 0.4, ...) {
-    log_dna <- log2(getDNA(object) + 1)
-    logr <- log2(getRNA(object) + 1) - log_dna
+fit_corr <- function(object, aggregate = c("mean", "sum", "none"), design, normalize = TRUE, block = NULL, plot = TRUE, span = 0.4, ...) {
+    aggregate <- match.arg(aggregate)
+
+    if (normalize) {
+        object <- normalize_counts(object)
+    }
+    logr <- compute_logratio(object, aggregate = aggregate)
+    log_dna <- log2(getDNA(object, aggregate = TRUE) + 1)
 
     ## Estimate mean-variance relationship to get precision weights
-    w <- get_precision_weights(logr = logr, log_dna = log_dna,
+    w <- get_precision_weights(logr = logr, design = design, log_dna = log_dna,
                                span = span, plot = plot, ...)
 
     ## Estimate correlation between element versions that are paired
