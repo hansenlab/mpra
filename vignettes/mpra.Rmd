@@ -17,7 +17,7 @@ output:
 
 # Introduction
 
-Something. Cite [@voom]
+The `r Biocpkg("mpra")` package provides tools for the analysis of MPRA data. The primary purpose is to enable powerful differential analysis of activity measures, but the package can also be used to generate precision weights useful in regression analyses of activity scores on sequence features. The main workhorse of the `r Biocpkg("mpra")` package is the `mpralm` function which draws on the previously proposed `voom` framework for RNA-seq analysis [@voom]. In this document, we will be looking at MPRA data from a study comparing episomal and lentiviral versions of MPRA [@Inoue:2017].
 
 # Dependencies
 
@@ -25,6 +25,28 @@ This document has the following dependencies
 
 ```{r dependencies, warning=FALSE, message=FALSE}
 library(mpra)
+```
+
+# Analysis
+
+We load the aggregated version of MPRA data.
+
+```{r}
+data(mpraSetAggExample)
+```
+
+We create the design matrix with an indicator for the episomal (mutant integrase) samples and fit the precision-weighted linear model with `mpralm`.
+
+```{r}
+design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(counts$dna)))
+mpralm_fit <- mpralm(object = mpraSetAggExample, design = design, model_type = "indep_groups")
+```
+
+The resulting fit object can be used with `topTable` from the `r Biocpkg("limma")` package.
+
+```{r}
+toptab <- topTable(fit, coef = 2, number = Inf)
+head(toptab)
 ```
 
 # Sessioninfo
