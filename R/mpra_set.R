@@ -6,7 +6,7 @@ setValidity("MPRASet", function(object) {
     msg <- validMsg(msg, !is.null(eid(object)))
     if("barcode" %in% names(rowData(object))) {
         if(!is.character(rowData(object)$barcode) || anyDuplicated(rowData(object)$barcode))
-            mdg <- validMsg(msg, "`barcode` should be a character vector without duplicate values.")
+            msg <- validMsg(msg, "`barcode` should be a character vector without duplicate values.")
     }
     if("eseq" %in% names(rowData(object)) && !is.character(rowData(object)$eseq))
         msg <- validMsg(msg, "`eseq` should be a character vector")
