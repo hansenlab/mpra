@@ -43,7 +43,7 @@ getDNA <- function(object, aggregate = FALSE) {
     raw <- assay(object, "DNA")
     if (aggregate) {
         eid <- getEid(object)
-        by_out <- by(raw, eid, colSums)
+        by_out <- by(raw, eid, colSums, na.rm = TRUE)
         agg <- do.call("rbind", by_out)
         rownames(agg) <- names(by_out)
         return(agg)
@@ -57,7 +57,7 @@ getRNA <- function(object, aggregate = FALSE) {
     raw <- assay(object, "RNA")
     if (aggregate) {
         eid <- getEid(object)
-        by_out <- by(raw, eid, colSums)
+        by_out <- by(raw, eid, colSums, na.rm = TRUE)
         agg <- do.call("rbind", by_out)
         rownames(agg) <- names(by_out)
         return(agg)
