@@ -38,7 +38,7 @@ An object of class \code{MArrayLM} resulting from the \code{eBayes} function.
 This function is used if the two versions of an element being compared (often in allelic studies) are measured in the same sample. When the \code{MPRASet} object is created, the two versions of all elements are split into separate columns although they come from the same sample.
 }
 \references{
-  Smyth, Gordon K., Jo{\"e}lle Michaud, and Hamish S. Scott. 2005.
+  Smyth, Gordon K., Jo\"{e}lle Michaud, and Hamish S. Scott. 2005.
   \emph{Use of within-Array Replicate Spots for Assessing Differential Expression in Microarray Experiments.} Bioinformatics  21 (9): 2067–75. doi:10.1093/bioinformatics/bti270.
 }
 \examples{
