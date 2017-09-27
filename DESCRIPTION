@@ -9,7 +9,8 @@ Depends:
 	methods,
 	BiocGenerics,
 	SummarizedExperiment,
-	limma
+	limma,
+	statmod
 Suggests:
 	BiocStyle,
 	knitr,
