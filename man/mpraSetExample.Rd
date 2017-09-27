@@ -30,7 +30,7 @@ data("mpraSetAggExample")
   Daniela M. Witten, Michael T. McManus, Nadav Ahituv, and 
   Jay Shendure. 2017. \emph{A Systematic Comparison Reveals Substantial 
   Differences in Chromosomal versus Episomal Encoding of Enhancer 
-  Activity}. Genome Research 27 (1): 38–52. doi:10.1101/gr.212092.116.
+  Activity}. Genome Research 27 (1): 38-52. doi:10.1101/gr.212092.116.
 }
 \examples{
 data(mpraSetAggExample)

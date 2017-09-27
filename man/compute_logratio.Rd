@@ -2,7 +2,7 @@
 \alias{compute_logratio}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+  Compute activity measure (log-ratio) for each element.
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~

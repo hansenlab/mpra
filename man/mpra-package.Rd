@@ -22,7 +22,7 @@ Maintainer: \packageMaintainer{mpra}
   Genome Biology 15 (2): R29. doi:10.1186/gb-2014-15-2-r29.
 
   Smyth, Gordon K., Jo\"{e}lle Michaud, and Hamish S. Scott. 2005.
-  \emph{Use of within-Array Replicate Spots for Assessing Differential Expression in Microarray Experiments.} Bioinformatics  21 (9): 2067–75. doi:10.1093/bioinformatics/bti270.
+  \emph{Use of within-Array Replicate Spots for Assessing Differential Expression in Microarray Experiments.} Bioinformatics  21 (9): 2067-75. doi:10.1093/bioinformatics/bti270.
 }
 \keyword{ package }
 \examples{

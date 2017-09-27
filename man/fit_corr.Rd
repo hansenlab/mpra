@@ -39,7 +39,7 @@ This function is used if the two versions of an element being compared (often in
 }
 \references{
   Smyth, Gordon K., Jo\"{e}lle Michaud, and Hamish S. Scott. 2005.
-  \emph{Use of within-Array Replicate Spots for Assessing Differential Expression in Microarray Experiments.} Bioinformatics  21 (9): 2067–75. doi:10.1093/bioinformatics/bti270.
+  \emph{Use of within-Array Replicate Spots for Assessing Differential Expression in Microarray Experiments.} Bioinformatics  21 (9): 2067-75. doi:10.1093/bioinformatics/bti270.
 }
 \examples{
   data(mpraSetExample)
