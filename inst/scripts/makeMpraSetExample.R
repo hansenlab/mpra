@@ -48,7 +48,7 @@ identical(rownames(dna_mat_bc), rownames(rna_mat_bc))
 identical(colnames(dna_mat_bc), colnames(rna_mat_bc))
 
 mpraSetExample <- MPRASet(DNA = dna_mat_bc, RNA = rna_mat_bc,
-	                      eid = rownames(dna_mat_bc), barcode = dna_bc$bcid,
+	                      eid = dna_bc$eid, barcode = dna_bc$bcid,
 	                      eseq = NULL
 	              )
 
