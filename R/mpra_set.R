@@ -3,7 +3,7 @@ setClass("MPRASet", contains = "SummarizedExperiment")
 setValidity("MPRASet", function(object) {
     ## Required information: DNA, RNA, and element ID
     msg <- validMsg(NULL, .check_assay_names(object, c("DNA", "RNA")))
-    msg <- validMsg(msg, !is.null(eid(object)))
+    msg <- validMsg(msg, !is.null(getEid(object)))
     if("barcode" %in% names(rowData(object))) {
         if(!is.character(rowData(object)$barcode) || anyDuplicated(rowData(object)$barcode))
             msg <- validMsg(msg, "`barcode` should be a character vector without duplicate values.")
