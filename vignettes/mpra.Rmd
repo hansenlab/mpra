@@ -37,15 +37,15 @@ data(mpraSetAggExample)
 
 We create the design matrix with an indicator for the episomal (mutant integrase) samples and fit the precision-weighted linear model with `mpralm`.
 
-```{r}
-design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(counts$dna)))
+```{r, fig=TRUE}
+design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(mpraSetAggExample)))
 mpralm_fit <- mpralm(object = mpraSetAggExample, design = design, model_type = "indep_groups")
 ```
 
 The resulting fit object can be used with `topTable` from the `r Biocpkg("limma")` package.
 
 ```{r}
-toptab <- topTable(fit, coef = 2, number = Inf)
+toptab <- topTable(mpralm_fit, coef = 2, number = Inf)
 head(toptab)
 ```
 
