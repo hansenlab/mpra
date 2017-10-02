@@ -1,15 +1,15 @@
-mpralm <- function(object, aggregate = c("mean", "sum", "none"), normalize = TRUE, design, block = NULL, model_type = c("indep_groups", "corr_groups"), ...) {
+mpralm <- function(object, aggregate = c("mean", "sum", "none"), normalize = TRUE, design, block = NULL, model_type = c("indep_groups", "corr_groups"), plot = TRUE, ...) {
     .is_mpra_or_stop(object)
 
     aggregate <- match.arg(aggregate)
 
     if (model_type=="indep_groups") {
-        fit <- fit_standard(object = object, design = design, aggregate = aggregate, normalize = normalize, ...)
+        fit <- fit_standard(object = object, design = design, aggregate = aggregate, normalize = normalize, plot = plot, ...)
     } else if (model_type=="corr_groups") {
         if (is.null(block)) {
             stop("'block' must be supplied for the corr_groups model type")
         }
-        fit <- fit_corr(object = object, design = design, block = block, aggregate = aggregate, normalize = normalize, ...)
+        fit <- fit_corr(object = object, design = design, block = block, aggregate = aggregate, normalize = normalize, plot = plot, ...)
     }
     return(fit)
 }
