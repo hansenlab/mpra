@@ -2,10 +2,10 @@
 \alias{mpralm}
 \title{Linear models for differential analysis of MPRA data}
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Fits weighted linear models to test for differential activity in MPRA data.
 }
 \usage{
-mpralm(object, aggregate = c("mean", "sum", "none"), normalize = TRUE, design, block = NULL, model_type = c("indep_groups", "corr_groups"), ...)
+mpralm(object, aggregate = c("mean", "sum", "none"), normalize = TRUE, design, block = NULL, model_type = c("indep_groups", "corr_groups"), plot = TRUE, ...)
 }
 \arguments{
   \item{object}{An object of class \code{MPRASet}.}
@@ -23,6 +23,9 @@ A vector giving the sample designations of the columns of \code{object}. The def
 }
   \item{model_type}{
 Indicates whether an unpaired model fit (\code{"indep_groups"}) or a paired mixed-model fit ((\code{"corr_groups"})) should be used.
+}
+  \item{plot}{
+If \code{TRUE}, plot the mean-variance relationship.
 }
   \item{\dots}{
 Further arguments to be passed to \code{lmFit} for obtaining residual standard deviations used in estimating the mean-variance relationship.
@@ -45,7 +48,7 @@ An object of class \code{MArrayLM} resulting from the \code{eBayes} function.
 \examples{
   data(mpraSetAggExample)
   design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(getDNA(mpraSetAggExample))))
-  mpralm_fit <- mpralm(object = mpraSetAggExample, aggregate = "none", normalize = TRUE, design = design, model_type = "indep_groups")
+  mpralm_fit <- mpralm(object = mpraSetAggExample, aggregate = "none", normalize = TRUE, design = design, model_type = "indep_groups", plot = FALSE)
   toptab <- topTable(mpralm_fit, coef = 2, number = Inf)
   head(toptab)
 }

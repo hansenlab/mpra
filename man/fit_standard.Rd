@@ -45,5 +45,5 @@ By default, an object of class \code{MArrayLM} resulting from the \code{eBayes} 
 \examples{
   data(mpraSetExample)
   design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(getDNA(mpraSetExample))))
-  mpralm_fit <- fit_standard(object = mpraSetExample, aggregate = "sum", design = design, normalize = TRUE)
+  mpralm_fit <- fit_standard(object = mpraSetExample, aggregate = "sum", design = design, normalize = TRUE, plot = FALSE)
 }

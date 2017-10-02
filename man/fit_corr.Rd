@@ -48,5 +48,5 @@ This function is used if the two versions of an element being compared (often in
   blocks <- rep(1:3, 2)
   ## Technically, this is an incorrect analysis because the columns are not paired
   ## This is just for illustration
-  mpralm_fit <- fit_corr(object = mpraSetExample, aggregate = "mean", design = design, normalize = TRUE, block = blocks)
+  mpralm_fit <- fit_corr(object = mpraSetExample, aggregate = "mean", design = design, normalize = TRUE, block = blocks, plot = FALSE)
 }
