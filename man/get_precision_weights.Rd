@@ -40,8 +40,9 @@ A matrix of precision weights of the same dimension as \code{logr} and \code{log
   Genome Biology 15 (2): R29. doi:10.1186/gb-2014-15-2-r29.
 }
 \examples{
-  data(mpraSetExample)
-  design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(getDNA(mpraSetExample))))
-  logr <- compute_logratio(mpraSetExample, aggregate = "mean")
-  w <- get_precision_weights(logr = logr, design = design, plot = FALSE)
+  data(mpraSetAggExample)
+  design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(mpraSetAggExample)))
+  logr <- compute_logratio(mpraSetAggExample, aggregate = "none")
+  log_dna <- log2(getDNA(mpraSetAggExample, aggregate = FALSE) + 1)
+  w <- get_precision_weights(logr = logr, design = design, log_dna = log_dna, plot = FALSE)
 }

@@ -29,6 +29,6 @@ Maintainer: \packageMaintainer{mpra}
   data(mpraSetAggExample)
   design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(getDNA(mpraSetAggExample))))
   mpralm_fit <- mpralm(object = mpraSetAggExample, aggregate = "none", normalize = TRUE, design = design, model_type = "indep_groups")
-  toptab <- topTable(fit, coef = 2, number = Inf)
+  toptab <- topTable(mpralm_fit, coef = 2, number = Inf)
   head(toptab)
 }
