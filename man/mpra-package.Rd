@@ -9,7 +9,13 @@
 \packageDescription{mpra}
 }
 \details{
-  This package provides tools for the analysis of MPRA data. The primary purpose is to enable powerful differential analysis of activity measures, but the package can also be used to generate precision weights useful in regression analyses of activity scores on sequence features. The main workhorse is the \code{mpralm} function which draws on the previously proposed \code{voom} framework for RNA-seq analysis in the \code{limma} package.
+  This package provides tools for the analysis of MPRA data. The primary
+  purpose is to enable powerful differential analysis of activity
+  measures, but the package can also be used to generate precision
+  weights useful in regression analyses of activity scores on sequence
+  features. The main workhorse is the \code{mpralm} function which draws
+  on the previously proposed \code{voom} framework for RNA-seq analysis
+  in the \code{limma} package.
 }
 \author{
 \packageAuthor{mpra}

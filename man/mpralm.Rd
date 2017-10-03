@@ -11,33 +11,32 @@ mpralm(object, aggregate = c("mean", "sum", "none"), normalize = TRUE,
 }
 \arguments{
   \item{object}{An object of class \code{MPRASet}.}
-  \item{aggregate}{
-Aggregation method over barcodes: \code{"mean"} to use the average of barcode-specific log ratios, \code{"sum"} to use the log ratio of summed RNA and DNA counts, \code{"none"} to perform no aggregation (counts have already been summarized over barcodes).
-}
-  \item{normalize}{
-If \code{TRUE}, perform total count normalization before model fitting.
-}
-  \item{design}{
-Design matrix specifying comparisons of interest.
-}
-  \item{block}{
-A vector giving the sample designations of the columns of \code{object}. The default, \code{NULL}, indicates that all columns are separate samples.
-}
-  \item{model_type}{
-Indicates whether an unpaired model fit (\code{"indep_groups"}) or a paired mixed-model fit ((\code{"corr_groups"})) should be used.
-}
-  \item{plot}{
-If \code{TRUE}, plot the mean-variance relationship.
-}
-  \item{\dots}{
-Further arguments to be passed to \code{lmFit} for obtaining residual standard deviations used in estimating the mean-variance relationship.
-}
+  \item{aggregate}{Aggregation method over barcodes: \code{"mean"} to
+    use the average of barcode-specific log ratios, \code{"sum"} to use
+    the log ratio of summed RNA and DNA counts, \code{"none"} to perform
+    no aggregation (counts have already been summarized over barcodes).}
+  \item{normalize}{If \code{TRUE}, perform total count normalization
+    before model fitting.}
+  \item{design}{Design matrix specifying comparisons of interest.}
+  \item{block}{A vector giving the sample designations of the columns of
+    \code{object}. The default, \code{NULL}, indicates that all columns
+    are separate samples.} 
+  \item{model_type}{Indicates whether an unpaired model fit
+    (\code{"indep_groups"}) or a paired mixed-model fit
+    ((\code{"corr_groups"})) should be used.}
+  \item{plot}{If \code{TRUE}, plot the mean-variance relationship.}
+  \item{\dots}{Further arguments to be passed to \code{lmFit} for
+    obtaining residual standard deviations used in estimating the
+    mean-variance relationship.} 
 }
 \details{
-Using \code{method_type = "corr_groups"} use the \code{duplicateCorrelation} function from the \code{limma} package to estimate the intra-replicate correlation of log-ratio values.
+Using \code{method_type = "corr_groups"} use the
+\code{duplicateCorrelation} function from the \code{limma} package to
+estimate the intra-replicate correlation of log-ratio values.
 }
 \value{
-An object of class \code{MArrayLM} resulting from the \code{eBayes} function.
+An object of class \code{MArrayLM} resulting from the \code{eBayes}
+function. 
 }
 \references{
   Myint, Leslie, Dimitrios G. Avramopoulos, Loyal A. Goff, and Kasper

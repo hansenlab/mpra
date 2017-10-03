@@ -13,9 +13,10 @@ compute_logratio(object, aggregate = c("mean", "sum", "none"))
 }
 \arguments{
   \item{object}{An object of class \code{MPRASet}.}
-  \item{aggregate}{
-Aggregation method over barcodes: \code{"mean"} to use the average of barcode-specific log ratios, \code{"sum"} to use the log ratio of summed RNA and DNA counts, \code{"none"} to perform no aggregation (counts have already been summarized over barcodes).
-}
+  \item{aggregate}{Aggregation method over barcodes: \code{"mean"} to
+    use the average of barcode-specific log ratios, \code{"sum"} to use
+    the log ratio of summed RNA and DNA counts, \code{"none"} to perform
+    no aggregation (counts have already been summarized over barcodes).}
 }
 \value{
 A \code{matrix} with the same dimension as \code{object}, containing element- 
