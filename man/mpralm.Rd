@@ -41,17 +41,19 @@ An object of class \code{MArrayLM} resulting from the \code{eBayes} function.
 }
 \references{
   Myint, Leslie, Dimitrios G. Avramopoulos, Loyal A. Goff, and Kasper
-  D. Hansen. 2017.
+  D. Hansen.
   \emph{Linear models enable powerful differential activity analysis in
     massively parallel reporter assays}. 
-  bioRxiv 196394. doi:10.1101/196394
+  bioRxiv 2017, 196394. \doi{10.1101/196394}.
 
-  Law, Charity W., Yunshun Chen, Wei Shi, and Gordon K. Smyth. 2014. 
+  Law, Charity W., Yunshun Chen, Wei Shi, and Gordon K. Smyth.
   \emph{Voom: Precision Weights Unlock Linear Model Analysis Tools for RNA-Seq Read Counts}. 
-  Genome Biology 15 (2): R29. doi:10.1186/gb-2014-15-2-r29.
+  Genome Biology 2014, 15:R29. \doi{10.1186/gb-2014-15-2-r29}.
 
-  Smyth, Gordon K., Jo\"{e}lle Michaud, and Hamish S. Scott. 2005.
-  \emph{Use of within-Array Replicate Spots for Assessing Differential Expression in Microarray Experiments.} Bioinformatics  21 (9): 2067-75. doi:10.1093/bioinformatics/bti270.
+  Smyth, Gordon K., Jo\"{e}lle Michaud, and Hamish S. Scott. 
+  \emph{Use of within-Array Replicate Spots for Assessing Differential
+    Expression in Microarray Experiments.} 
+  Bioinformatics 2005, 21 (9): 2067-75. \doi{10.1093/bioinformatics/bti270}.
 }
 \examples{
 data(mpraSetAggExample)
