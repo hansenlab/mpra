@@ -17,6 +17,12 @@
 Maintainer: \packageMaintainer{mpra}
 }
 \references{
+  Myint, Leslie, Dimitrios G. Avramopoulos, Loyal A. Goff, and Kasper
+  D. Hansen. 2017.
+  \emph{Linear models enable powerful differential activity analysis in
+    massively parallel reporter assays}. 
+  bioRxiv 196394. doi:10.1101/196394
+
   Law, Charity W., Yunshun Chen, Wei Shi, and Gordon K. Smyth. 2014. 
   \emph{Voom: Precision Weights Unlock Linear Model Analysis Tools for RNA-Seq Read Counts}. 
   Genome Biology 15 (2): R29. doi:10.1186/gb-2014-15-2-r29.
@@ -26,9 +32,11 @@ Maintainer: \packageMaintainer{mpra}
 }
 \keyword{ package }
 \examples{
-  data(mpraSetAggExample)
-  design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(getDNA(mpraSetAggExample))))
-  mpralm_fit <- mpralm(object = mpraSetAggExample, aggregate = "none", normalize = TRUE, design = design, model_type = "indep_groups", plot = FALSE)
-  toptab <- topTable(mpralm_fit, coef = 2, number = Inf)
-  head(toptab)
+data(mpraSetAggExample)
+design <- data.frame(intcpt = 1,
+                     episomal = grepl("MT", colnames(mpraSetAggExample)))
+mpralm_fit <- mpralm(object = mpraSetAggExample, aggregate = "none", normalize = TRUE,
+                     design = design, model_type = "indep_groups", plot = FALSE)
+toptab <- topTable(mpralm_fit, coef = 2, number = Inf)
+head(toptab)
 }

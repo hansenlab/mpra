@@ -5,7 +5,8 @@
 Fits a mixed effects model (random intercept) for each element as part of the differential analysis routine. This accounts for pairing between the columns of the \code{MPRASet} object.
 }
 \usage{
-fit_corr(object, aggregate = c("mean", "sum", "none"), design, normalize = TRUE, block = NULL, plot = TRUE, span = 0.4, ...)
+fit_corr(object, aggregate = c("mean", "sum", "none"), design,
+         normalize = TRUE, block = NULL, plot = TRUE, span = 0.4, ...)
 }
 \arguments{
   \item{object}{An object of class \code{MPRASet}.}
@@ -42,11 +43,16 @@ This function is used if the two versions of an element being compared (often in
   \emph{Use of within-Array Replicate Spots for Assessing Differential Expression in Microarray Experiments.} Bioinformatics  21 (9): 2067-75. doi:10.1093/bioinformatics/bti270.
 }
 \examples{
-  data(mpraSetExample)
-  design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(getDNA(mpraSetExample))))
-  ## Create fake blocks. This creates pairings between columns 1 and 4, 2 and 5, 3 and 6
-  blocks <- rep(1:3, 2)
-  ## Technically, this is an incorrect analysis because the columns are not paired
-  ## This is just for illustration
-  mpralm_fit <- fit_corr(object = mpraSetExample, aggregate = "mean", design = design, normalize = TRUE, block = blocks, plot = FALSE)
+data(mpraSetExample)
+design <- data.frame(intcpt = 1,
+                     episomal = grepl("MT", colnames(mpraSetExample)))
+## Create fake blocks. This creates pairings between columns
+##        1 and 4, 2 and 5, 3 and 6
+blocks <- rep(1:3, 2)
+## Technically, this is an incorrect analysis because the columns
+## are not paired
+## This is just for illustration
+mpralm_fit <- fit_corr(object = mpraSetExample, aggregate = "mean",
+                       design = design, normalize = TRUE, block = blocks,
+                       plot = FALSE)
 }

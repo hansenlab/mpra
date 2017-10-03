@@ -5,7 +5,9 @@
 Fits a standard (weighted) linear model for each element as part of the differential analysis routine. This is used if the columns of the \code{MPRASet} object are not paired.
 }
 \usage{
-fit_standard(object, aggregate = c("mean", "sum", "none"), design, normalize = TRUE, return_elist = FALSE, return_weights = FALSE, plot = TRUE, span = 0.4, ...)
+fit_standard(object, aggregate = c("mean", "sum", "none"), design,
+             normalize = TRUE, return_elist = FALSE,
+             return_weights = FALSE, plot = TRUE, span = 0.4, ...)
 }
 \arguments{
   \item{object}{An object of class \code{MPRASet}.}
@@ -43,7 +45,8 @@ By default, an object of class \code{MArrayLM} resulting from the \code{eBayes} 
   Genome Biology 15 (2): R29. doi:10.1186/gb-2014-15-2-r29.
 }
 \examples{
-  data(mpraSetExample)
-  design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(getDNA(mpraSetExample))))
-  mpralm_fit <- fit_standard(object = mpraSetExample, aggregate = "sum", design = design, normalize = TRUE, plot = FALSE)
+data(mpraSetExample)
+design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(mpraSetExample)))
+mpralm_fit <- fit_standard(object = mpraSetExample, aggregate = "sum",
+                           design = design, normalize = TRUE, plot = FALSE)
 }

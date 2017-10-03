@@ -5,7 +5,9 @@
 Fits weighted linear models to test for differential activity in MPRA data.
 }
 \usage{
-mpralm(object, aggregate = c("mean", "sum", "none"), normalize = TRUE, design, block = NULL, model_type = c("indep_groups", "corr_groups"), plot = TRUE, ...)
+mpralm(object, aggregate = c("mean", "sum", "none"), normalize = TRUE,
+       design, block = NULL, model_type = c("indep_groups", "corr_groups"),
+       plot = TRUE, ...)
 }
 \arguments{
   \item{object}{An object of class \code{MPRASet}.}
@@ -38,6 +40,12 @@ Using \code{method_type = "corr_groups"} use the \code{duplicateCorrelation} fun
 An object of class \code{MArrayLM} resulting from the \code{eBayes} function.
 }
 \references{
+  Myint, Leslie, Dimitrios G. Avramopoulos, Loyal A. Goff, and Kasper
+  D. Hansen. 2017.
+  \emph{Linear models enable powerful differential activity analysis in
+    massively parallel reporter assays}. 
+  bioRxiv 196394. doi:10.1101/196394
+
   Law, Charity W., Yunshun Chen, Wei Shi, and Gordon K. Smyth. 2014. 
   \emph{Voom: Precision Weights Unlock Linear Model Analysis Tools for RNA-Seq Read Counts}. 
   Genome Biology 15 (2): R29. doi:10.1186/gb-2014-15-2-r29.
@@ -46,9 +54,12 @@ An object of class \code{MArrayLM} resulting from the \code{eBayes} function.
   \emph{Use of within-Array Replicate Spots for Assessing Differential Expression in Microarray Experiments.} Bioinformatics  21 (9): 2067-75. doi:10.1093/bioinformatics/bti270.
 }
 \examples{
-  data(mpraSetAggExample)
-  design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(getDNA(mpraSetAggExample))))
-  mpralm_fit <- mpralm(object = mpraSetAggExample, aggregate = "none", normalize = TRUE, design = design, model_type = "indep_groups", plot = FALSE)
-  toptab <- topTable(mpralm_fit, coef = 2, number = Inf)
-  head(toptab)
+data(mpraSetAggExample)
+design <- data.frame(intcpt = 1,
+                     episomal = grepl("MT", colnames(mpraSetAggExample)))
+mpralm_fit <- mpralm(object = mpraSetAggExample, aggregate = "none",
+                     normalize = TRUE, design = design,
+                     model_type = "indep_groups", plot = FALSE)
+toptab <- topTable(mpralm_fit, coef = 2, number = Inf)
+head(toptab)
 }
