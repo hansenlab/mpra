@@ -29,7 +29,6 @@ fit_standard(object, aggregate = c("mean", "sum", "none"), design,
     obtaining residual standard deviations used in estimating the
     copy number-variance relationship.} 
 }
-}
 \value{
 By default, an object of class \code{MArrayLM} resulting from the
 \code{eBayes} function. If \code{return_elist} is \code{TRUE}, then an

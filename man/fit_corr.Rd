@@ -29,7 +29,6 @@ fit_corr(object, aggregate = c("mean", "sum", "none"), design,
     obtaining residual standard deviations used in estimating the
     copy number-variance relationship.}
 }
-}
 \value{
 An object of class \code{MArrayLM} resulting from the \code{eBayes} function.
 }
