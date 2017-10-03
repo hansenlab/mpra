@@ -17,7 +17,11 @@ output:
 
 # Introduction
 
-The `r Biocpkg("mpra")` package provides tools for the analysis of MPRA data. The primary purpose is to enable powerful differential analysis of activity measures, but the package can also be used to generate precision weights useful in regression analyses of activity scores on sequence features. The main workhorse of the `r Biocpkg("mpra")` package is the `mpralm` function which draws on the previously proposed `voom` framework for RNA-seq analysis [@voom]. In this document, we will be looking at MPRA data from a study comparing episomal and lentiviral versions of MPRA [@Inoue:2017].
+The `r Biocpkg("mpra")` package provides tools for the analysis of data from massively parallel reporter assays (MPRA).  Specifically, it contains the functionality described in [@mpralm].  The primary analysis purpose is to enable differential analysis of activity measures, but the package can also be used to generate precision weights useful in regression analyses of activity scores on sequence features. The main workhorse of the `r Biocpkg("mpra")` package is the `mpralm()` function which draws on the previously proposed voom framework for RNA-seq analysis [@voom]. In this document, we will be looking at MPRA data from a study comparing episomal and lentiviral versions of MPRA [@Inoue:2017].
+
+## How to cite
+
+If you are using this package, please cite [@mpralm]. If you are using the `mpralm()` function, it would be appropriate to also cite the voom framework [@voom].
 
 # Dependencies
 
