@@ -6,7 +6,7 @@ import(S4Vectors)
 importFrom("scales", "alpha")
 importFrom("graphics", "lines")
 importFrom("stats", "approxfun", "lowess")
-
+importFrom("statmod", "mixedModel2Fit")
 
 exportClasses("MPRASet")
 exportMethods("show")
