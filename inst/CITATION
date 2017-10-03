@@ -1,0 +1,14 @@
+c(bibentry(bibtype = "Article",
+           key = "mpralm",
+           title = "Linear models enable powerful differential activity analysis in massively parallel reporter assays",
+           author = c(
+               person("Leslie", "Myint"),
+               person(c("Dimitrios", "G"), "Avramopoulos"),
+               person(c("Loyal", "A"), "Goff"),
+               person(c("Kasper", "D."), "Hansen")),
+           year = 2017,
+           journal = "bioRxiv",
+           pages = "196394",
+           doi = "10.1101/196394",
+           header = "The mpralm functionality is described in:")
+  )
