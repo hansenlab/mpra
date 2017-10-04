@@ -31,19 +31,123 @@ This document has the following dependencies
 library(mpra)
 ```
 
-# Analysis
+# Creating an MPRASet object
 
-We load the aggregated version of MPRA data.
+In this package, MPRA data are contained in `MPRASet` objects. Because MPRA data do not have a common prescribed format, these objects must be created manually. In this section, we demonstrate how to do this.
+
+`MPRASet` objects must contain DNA and RNA count information because this is the information used to quantify activity levels of the elements being assayed. DNA and RNA count information should be specified as $K \times S$ integer count matrices where $K$ is the total number of barcodes over all elements if barcode-level information is being supplied or the total number of putative regulatory elements (PREs) if element-level information is being supplied. $S$ is the number of samples (typically, the number of independent transfections).
+
+`MPRASet` objects must also contain element identification information. This should be supplied as a character vector of length $K$, the number of rows in the DNA and RNA count matrices. These are any strings used to describe/identify the unique PREs being assayed.
+
+Optionally, the barcode sequences and PRE sequences can be specified as length $K$ character vectors.
+
+In the next sections we provide specific examples for how to specify this information for two common differential analysis settings: tissue and allele comparisons. Although we show simulated data, this information would typically be read from text files.
+
+## Tissue comparison
+
+In tissue comparison studies, the same set of PREs is assayed in two or more cell types. In the following example, the experiment looks at four PREs with three barcodes each. Two tissues (liver and kidney) are studied, and each tissue has four replicates (four independent transfections each).
+
+RNA and DNA count matrices would look as below:
 
 ```{r}
-data(mpraSetAggExample)
+E <- 4 # Number of elements
+B <- 3 # Number of barcodes
+s <- 4 # Samples per tissue
+nt <- 2 # Number of tissues
+
+set.seed(434)
+rna <- matrix(rpois(E*B*s*nt, lambda = 30), nrow = E*B, ncol = s*nt)
+dna <- matrix(rpois(E*B*s*nt, lambda = 30), nrow = E*B, ncol = s*nt)
+
+rn <- as.character(outer(paste0("barcode_", seq_len(B), "_"), paste0("elem_", seq_len(E)), FUN = "paste0"))
+cn <- c(paste0("liver_", seq_len(s)), paste0("kidney_", seq_len(s)))
+
+rownames(rna) <- rn
+rownames(dna) <- rn
+colnames(rna) <- cn
+colnames(dna) <- cn
+
+rna
+dna
 ```
 
-We create the design matrix with an indicator for the episomal (mutant integrase) samples and fit the precision-weighted linear model with `mpralm`.
+PRE identification strings would look as below. When counts are provided at the barcode level, the `eid` character vector will have repeated elements.
+
+```{r}
+eid <- rep(paste0("elem_", seq_len(E)), each = B)
+eid
+```
+
+We may also have PRE sequences as below. These sequences must be specified in a character vector of the same length as `eid` and the same number of rows as `rna` and `dna`.
+
+```{r}
+eseq <- replicate(E, paste(sample(c("A", "T", "C", "G"), 10, replace = TRUE), collapse = ""))
+eseq
+```
+
+The above pieces (`rna`, `dna`, `eid`, and `eseq`) can be supplied as arguments to the `MPRASet` constructor function as below:
+
+```{r}
+mpraset_example2 <- MPRASet(DNA = dna, RNA = rna, eid = eid, eseq = eseq)
+mpraset_example2
+```
+
+## Allele comparison
+
+In allele comparison studies, PREs that exist with two or more alleles are assayed. All allelic-versions of the PREs are assayed in the same sample. Because activity comparisons between alleles is desired, these counts must be separated into different columns. In the following example, the experiment looks at four PREs with three barcodes each. There are two alleles per PRE, and there are four replicates (four independent transfections total).
+
+RNA and DNA count matrices would look as below:
+
+```{r}
+E <- 4 # Number of elements
+B <- 3 # Number of barcodes
+s <- 4 # Total number of samples
+nalleles <- 2 # Number of alleles
+
+set.seed(434)
+rna <- matrix(rpois(E*B*s*nalleles, lambda = 30), nrow = E*B, ncol = s*nalleles)
+dna <- matrix(rpois(E*B*s*nalleles, lambda = 30), nrow = E*B, ncol = s*nalleles)
+
+rn <- as.character(outer(paste0("barcode_", seq_len(B), "_"), paste0("elem_", seq_len(E)), FUN = "paste0"))
+cn <- c(paste0("allele1_sample", seq_len(s)), paste0("allele2_sample", seq_len(s)))
+
+rownames(rna) <- rn
+rownames(dna) <- rn
+colnames(rna) <- cn
+colnames(dna) <- cn
+
+rna
+dna
+```
+
+We could define PRE identification strings and sequences as above and use them in the `MPRASet` constructor function similarly:
+
+```{r}
+mpraset_example2 <- MPRASet(DNA = dna, RNA = rna, eid = eid, eseq = eseq)
+mpraset_example2
+```
+
+# Analysis
+
+While the above section demonstrated how to create `MPRASet` objects, we will use preconstructed objects containing data from a comparison of episomal and lentiviral versions of MPRA [@Inoue:2017].
+
+```{r}
+data(mpraSetExample)
+```
+
+We create the design matrix with an indicator for the episomal (mutant integrase) samples and fit the precision-weighted linear model with `mpralm`. In MPRA experiments, activity measures are quantified as the log2 ratio of RNA counts over DNA counts. When there is barcode level information (as in this experiment), there are various ways to summarize information over barcodes to compute the final element- and sample-specific log ratios that are used for subsequent statistical modeling.
+
+We have specified `aggregate = "mean"` to indicate that the element- and sample-specific log ratios will be computed by first computing the log ratio of RNA counts over DNA counts for each barcode, then taking the mean over barcodes in a particular element and sample.
+
+We have specifed `normalize = TRUE` to perform total count normalization on the RNA and DNA libraries. This scales all libraries to have a common size of 10 million reads.
+
+Because this experiment looks at a set of PREs in two different cellular conditions, the different samples (columns of the `MPRASet` object) are independent. Thus we specify `model_type = "indep_groups"` to perform an unpaired analysis. In contrast, if we were performing an allele comparison, we would specify `model_type = "corr_groups"` to performed a paired analysis (indicating that different columns of the `MPRASet` object are linked).
+
+Finally, we specify `plot = TRUE` to plot the relationship between log ratio variability versus element copy number.
 
 ```{r, fig=TRUE}
-design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(mpraSetAggExample)))
-mpralm_fit <- mpralm(object = mpraSetAggExample, design = design, model_type = "indep_groups")
+design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(mpraSetExample)))
+mpralm_fit <- mpralm(object = mpraSetExample, design = design, aggregate = "mean", normalize = TRUE, model_type = "indep_groups", plot = TRUE)
 ```
 
 The resulting fit object can be used with `topTable` from the `r Biocpkg("limma")` package.
