@@ -1,6 +1,7 @@
 mpralm <- function(object, design, aggregate = c("mean", "sum", "none"),
                    normalize = TRUE, block = NULL,
-                   model_type = c("indep_groups", "corr_groups"), plot = TRUE, ...) {
+                   model_type = c("indep_groups", "corr_groups"),
+                   plot = TRUE, ...) {
     .is_mpra_or_stop(object)
     
     aggregate <- match.arg(aggregate)
@@ -34,7 +35,8 @@ get_precision_weights <- function(logr, design, log_dna, span = 0.4,
         lines(lo, lwd = 3, col = "red")
     }
     loFun <- approxfun(lo, rule = 2)
-    ## Use mean log DNA to get estimated sqrt(SD) to convert to precision weights
+    ## Use mean log DNA to get estimated sqrt(SD) to
+    ## convert to precision weights
     fittedvals <- log_dna
     w <- 1/loFun(fittedvals)^4
     dim(w) <- dim(fittedvals)
@@ -76,9 +78,11 @@ normalize_counts <- function(object, block = NULL) {
         libsizes_dna <- colSums(dna, na.rm = TRUE)
         libsizes_rna <- colSums(rna, na.rm = TRUE)
     } else {
-        libsizes_dna <- tapply(colSums(dna, na.rm = TRUE), block, sum, na.rm = TRUE)
+        libsizes_dna <- tapply(colSums(dna, na.rm = TRUE), block,
+                               sum, na.rm = TRUE)
         libsizes_dna <- libsizes_dna[block]
-        libsizes_rna <- tapply(colSums(rna, na.rm = TRUE), block, sum, na.rm = TRUE)
+        libsizes_rna <- tapply(colSums(rna, na.rm = TRUE), block,
+                               sum, na.rm = TRUE)
         libsizes_rna <- libsizes_rna[block]
     }
     dna_norm <- round(sweep(dna, 2, libsizes_dna, FUN = "/")*10e6)
@@ -134,7 +138,8 @@ fit_corr <- function(object, design, aggregate = c("mean", "sum", "none"),
                                span = span, plot = plot, ...)
 
     ## Estimate correlation between element versions that are paired
-    corfit <- duplicateCorrelation(logr, design = design, ndups = 1, block = block)
+    corfit <- duplicateCorrelation(logr, design = design,
+                                   ndups = 1, block = block)
 
     elist <- new("EList", list(E = logr, weights = w, design = design))
     fit <- lmFit(elist, design, block = block, correlation = corfit$consensus)

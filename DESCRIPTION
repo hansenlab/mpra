@@ -4,7 +4,7 @@ Title: Analyze massively parallel reporter assays
 Description: Tools to analyze & visualize massively parallel report assays (MPRA).
 Authors@R: c(
 	   person("Leslie", "Myint", role = c("cre", "aut"), email = "lmyint1@jhu.edu"),
-	   person(c("Kasper", "Daniel"), "Hansen", role = "aut"))
+	   person(c("Kasper", "D."), "Hansen", role = "aut"))
 Depends:
 	R (>= 3.4.0),
 	methods,
