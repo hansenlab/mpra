@@ -5,12 +5,15 @@ setValidity("MPRASet", function(object) {
     msg <- validMsg(NULL, .check_assay_names(object, c("DNA", "RNA")))
     msg <- validMsg(msg, !is.null(getEid(object)))
     if("barcode" %in% names(rowData(object))) {
-        if(!is.character(rowData(object)$barcode) || anyDuplicated(rowData(object)$barcode))
+        if(!is.character(rowData(object)$barcode) ||
+           anyDuplicated(rowData(object)$barcode))
             msg <- validMsg(msg, "`barcode` should be a character vector without duplicate values.")
     }
-    if("eseq" %in% names(rowData(object)) && !is.character(rowData(object)$eseq))
+    if("eseq" %in% names(rowData(object)) &&
+       !is.character(rowData(object)$eseq))
         msg <- validMsg(msg, "`eseq` should be a character vector")
-    if(! "eid" %in% names(rowData(object)) || !is.character(rowData(object)$eid))
+    if(! "eid" %in% names(rowData(object)) ||
+       !is.character(rowData(object)$eid))
         msg <- validMsg(msg, "`eid` should be present and be a character vector")
     if (is.null(msg)) TRUE else msg
 })
@@ -80,4 +83,3 @@ getEseq <- function(object) {
     .is_mpra_or_stop(object)
     rowData(object)$eseq
 }
-

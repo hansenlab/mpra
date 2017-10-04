@@ -43,8 +43,9 @@ Maintainer: \packageMaintainer{mpra}
 data(mpraSetAggExample)
 design <- data.frame(intcpt = 1,
                      episomal = grepl("MT", colnames(mpraSetAggExample)))
-mpralm_fit <- mpralm(object = mpraSetAggExample, aggregate = "none", normalize = TRUE,
-                     design = design, model_type = "indep_groups", plot = FALSE)
+mpralm_fit <- mpralm(object = mpraSetAggExample, design = design,
+                     aggregate = "none", normalize = TRUE,
+                     model_type = "indep_groups", plot = FALSE)
 toptab <- topTable(mpralm_fit, coef = 2, number = Inf)
 head(toptab)
 }

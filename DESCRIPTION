@@ -4,21 +4,24 @@ Title: Analyze massively parallel reporter assays
 Description: Tools to analyze & visualize massively parallel report assays (MPRA).
 Authors@R: c(
 	   person("Leslie", "Myint", role = c("cre", "aut"), email = "lmyint1@jhu.edu"),
-	   person(c("Kasper", "Daniel"), "Hansen", role = "aut"))
+	   person(c("Kasper", "D."), "Hansen", role = "aut"))
 Depends:
 	R (>= 3.4.0),
 	methods,
 	BiocGenerics,
 	SummarizedExperiment,
-	limma,
-	statmod
+	limma
 Suggests:
 	BiocStyle,
 	knitr,
-	rmarkdown
+	rmarkdown,
+	RUnit
 Imports:
 	S4Vectors,
-	scales
+	scales,
+	stats,
+	graphics,
+	statmod
 Collate:
 	mpra_set.R
 	utils.R
@@ -27,4 +30,4 @@ VignetteBuilder: knitr
 License: Artistic-2.0
 URL: https://github.com/hansenlab/mpra
 BugReports: https://github.com/hansenlab/mpra/issues
-biocViews: Software
+biocViews: Software, GeneRegulation, Sequencing, FunctionalGenomics
