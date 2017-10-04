@@ -7,15 +7,15 @@ mpralm <- function(object, design, aggregate = c("mean", "sum", "none"),
     aggregate <- match.arg(aggregate)
     
     if (model_type=="indep_groups") {
-        fit <- fit_standard(object = object, design = design,
-                            aggregate = aggregate, normalize = normalize,
-                            plot = plot, ...)
+        fit <- .fit_standard(object = object, design = design,
+                             aggregate = aggregate, normalize = normalize,
+                             plot = plot, ...)
     } else if (model_type=="corr_groups") {
         if (is.null(block)) {
             stop("'block' must be supplied for the corr_groups model type")
         }
-        fit <- fit_corr(object = object, design = design, aggregate = aggregate,
-                        normalize = normalize, block = block, plot = plot, ...)
+        fit <- .fit_corr(object = object, design = design, aggregate = aggregate,
+                         normalize = normalize, block = block, plot = plot, ...)
     }
     return(fit)
 }
@@ -94,9 +94,9 @@ normalize_counts <- function(object, block = NULL) {
     return(object)
 }
 
-fit_standard <- function(object, design, aggregate = c("mean", "sum", "none"),
-                         normalize = TRUE, return_elist = FALSE,
-                         return_weights = FALSE, plot = TRUE, span = 0.4, ...) {
+.fit_standard <- function(object, design, aggregate = c("mean", "sum", "none"),
+                          normalize = TRUE, return_elist = FALSE,
+                          return_weights = FALSE, plot = TRUE, span = 0.4, ...) {
     aggregate <- match.arg(aggregate)
 
     if (normalize) {
@@ -113,18 +113,18 @@ fit_standard <- function(object, design, aggregate = c("mean", "sum", "none"),
     
     if (return_weights) {
         return(w)
-    } else if (return_elist) {
-        return(elist)
-    } else {
-        fit <- lmFit(elist, design)
-        fit <- eBayes(fit)
-        return(fit)
     }
+    if (return_elist) {
+        return(elist)
+    } 
+    fit <- lmFit(elist, design)
+    fit <- eBayes(fit)
+    fit
 }
 
-fit_corr <- function(object, design, aggregate = c("mean", "sum", "none"),
-                     normalize = TRUE, block = NULL, plot = TRUE,
-                     span = 0.4, ...) {
+.fit_corr <- function(object, design, aggregate = c("mean", "sum", "none"),
+                     normalize = TRUE, block = NULL, return_elist = FALSE,
+                     return_weights = FALSE, plot = TRUE, span = 0.4, ...) {
     aggregate <- match.arg(aggregate)
 
     if (normalize) {
@@ -142,8 +142,15 @@ fit_corr <- function(object, design, aggregate = c("mean", "sum", "none"),
                                    ndups = 1, block = block)
 
     elist <- new("EList", list(E = logr, weights = w, design = design))
+
+    if (return_weights) {
+        return(w)
+    }
+    if (return_elist) {
+        return(elist)
+    } 
+
     fit <- lmFit(elist, design, block = block, correlation = corfit$consensus)
     fit <- eBayes(fit)
-    
-    return(fit)
+    fit
 }
