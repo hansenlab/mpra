@@ -82,14 +82,15 @@ We may also have PRE sequences as below. These sequences must be specified in a 
 
 ```{r}
 eseq <- replicate(E, paste(sample(c("A", "T", "C", "G"), 10, replace = TRUE), collapse = ""))
+eseq <- rep(eseq, each = B)
 eseq
 ```
 
-The above pieces (`rna`, `dna`, `eid`, and `eseq`) can be supplied as arguments to the `MPRASet` constructor function as below:
+The above pieces (`rna`, `dna`, `eid`, and `eseq`) can be supplied as arguments to the `MPRASet` constructor function as below. If `barcode` (barcode sequences) or `eseq` (PRE sequences) is not supplied, it must be specified as `NULL`.
 
 ```{r}
-mpraset_example2 <- MPRASet(DNA = dna, RNA = rna, eid = eid, eseq = eseq)
-mpraset_example2
+mpraset_example <- MPRASet(DNA = dna, RNA = rna, eid = eid, eseq = eseq, barcode = NULL)
+mpraset_example
 ```
 
 ## Allele comparison
@@ -123,7 +124,7 @@ dna
 We could define PRE identification strings and sequences as above and use them in the `MPRASet` constructor function similarly:
 
 ```{r}
-mpraset_example2 <- MPRASet(DNA = dna, RNA = rna, eid = eid, eseq = eseq)
+mpraset_example2 <- MPRASet(DNA = dna, RNA = rna, eid = eid, eseq = eseq, barcode = NULL)
 mpraset_example2
 ```
 
