@@ -7,16 +7,16 @@ of the differential analysis routine. This accounts for pairing between
 the columns of the \code{MPRASet} object.
 }
 \usage{
-fit_corr(object, aggregate = c("mean", "sum", "none"), design,
+fit_corr(object, design, aggregate = c("mean", "sum", "none"), 
          normalize = TRUE, block = NULL, plot = TRUE, span = 0.4, ...)
 }
 \arguments{
   \item{object}{An object of class \code{MPRASet}.}
+  \item{design}{Design matrix specifying comparisons of interest.}
   \item{aggregate}{Aggregation method over barcodes: \code{"mean"} to
     use the average of barcode-specific log ratios, \code{"sum"} to use
     the log ratio of summed RNA and DNA counts, \code{"none"} to perform
     no aggregation (counts have already been summarized over barcodes).} 
-  \item{design}{Design matrix specifying comparisons of interest.}
   \item{normalize}{If \code{TRUE}, perform total count normalization
     before model fitting.}
   \item{block}{A vector giving the sample designations of the columns of
@@ -54,7 +54,7 @@ blocks <- rep(1:3, 2)
 ## Technically, this is an incorrect analysis because the columns
 ## are not paired
 ## This is just for illustration
-mpralm_fit <- fit_corr(object = mpraSetExample, aggregate = "mean",
-                       design = design, normalize = TRUE, block = blocks,
-                       plot = FALSE)
+mpralm_fit <- fit_corr(object = mpraSetExample, design = design,
+                       aggregate = "mean", normalize = TRUE,
+                       block = blocks, plot = FALSE)
 }

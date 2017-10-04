@@ -80,4 +80,3 @@ getEseq <- function(object) {
     .is_mpra_or_stop(object)
     rowData(object)$eseq
 }
-

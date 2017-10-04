@@ -65,6 +65,10 @@ getEseq(object)
 \section{Extends}{
 Class \code{"\linkS4class{SummarizedExperiment}"}, directly.
 }
+\value{
+  The constrcutor function \code{MPRASet} returns an object of class
+  \code{"MPRASet"}.
+}
 \section{Accessors}{
 \describe{
 \item{\code{getDNA}:}{Gets the DNA channel data.}

@@ -5,19 +5,19 @@
 Fits weighted linear models to test for differential activity in MPRA data.
 }
 \usage{
-mpralm(object, aggregate = c("mean", "sum", "none"), normalize = TRUE,
-       design, block = NULL, model_type = c("indep_groups", "corr_groups"),
+mpralm(object, design, aggregate = c("mean", "sum", "none"), normalize = TRUE,
+       block = NULL, model_type = c("indep_groups", "corr_groups"),
        plot = TRUE, ...)
 }
 \arguments{
   \item{object}{An object of class \code{MPRASet}.}
+  \item{design}{Design matrix specifying comparisons of interest.}
   \item{aggregate}{Aggregation method over barcodes: \code{"mean"} to
     use the average of barcode-specific log ratios, \code{"sum"} to use
     the log ratio of summed RNA and DNA counts, \code{"none"} to perform
     no aggregation (counts have already been summarized over barcodes).}
   \item{normalize}{If \code{TRUE}, perform total count normalization
     before model fitting.}
-  \item{design}{Design matrix specifying comparisons of interest.}
   \item{block}{A vector giving the sample designations of the columns of
     \code{object}. The default, \code{NULL}, indicates that all columns
     are separate samples.} 
@@ -58,8 +58,8 @@ function.
 data(mpraSetAggExample)
 design <- data.frame(intcpt = 1,
                      episomal = grepl("MT", colnames(mpraSetAggExample)))
-mpralm_fit <- mpralm(object = mpraSetAggExample, aggregate = "none",
-                     normalize = TRUE, design = design,
+mpralm_fit <- mpralm(object = mpraSetAggExample, design = design,
+                     aggregate = "none", normalize = TRUE, 
                      model_type = "indep_groups", plot = FALSE)
 toptab <- topTable(mpralm_fit, coef = 2, number = Inf)
 head(toptab)

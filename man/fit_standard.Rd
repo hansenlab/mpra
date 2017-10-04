@@ -7,17 +7,17 @@ differential analysis routine. This is used if the columns of the
 \code{MPRASet} object are not paired.
 }
 \usage{
-fit_standard(object, aggregate = c("mean", "sum", "none"), design,
+fit_standard(object, design, aggregate = c("mean", "sum", "none"), 
              normalize = TRUE, return_elist = FALSE,
              return_weights = FALSE, plot = TRUE, span = 0.4, ...)
 }
 \arguments{
   \item{object}{An object of class \code{MPRASet}.}
+  \item{design}{Design matrix specifying comparisons of interest.}
   \item{aggregate}{Aggregation method over barcodes: \code{"mean"} to
     use the average of barcode-specific log ratios, \code{"sum"} to use
     the log ratio of summed RNA and DNA counts, \code{"none"} to perform
     no aggregation (counts have already been summarized over barcodes).}
-  \item{design}{Design matrix specifying comparisons of interest.}
   \item{normalize}{If \code{TRUE}, perform total count normalization
     before model fitting.}
   \item{return_elist}{FIXME}
@@ -44,6 +44,6 @@ of precision weights is returned.
 \examples{
 data(mpraSetExample)
 design <- data.frame(intcpt = 1, episomal = grepl("MT", colnames(mpraSetExample)))
-mpralm_fit <- fit_standard(object = mpraSetExample, aggregate = "sum",
-                           design = design, normalize = TRUE, plot = FALSE)
+mpralm_fit <- fit_standard(object = mpraSetExample, design = design,
+                           aggregate = "sum", normalize = TRUE, plot = FALSE)
 }
