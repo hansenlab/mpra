@@ -1,5 +1,5 @@
 Package: mpra
-Version: 0.0.1
+Version: 0.99.0
 Title: Analyze massively parallel reporter assays
 Description: Tools to analyze & visualize massively parallel report assays (MPRA).
 Authors@R: c(
