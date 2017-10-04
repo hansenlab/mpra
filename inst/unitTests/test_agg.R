@@ -9,3 +9,7 @@ test_agg <- function() {
     checkEquals(agg_manual, agg_pre)
 }
 
+test_data <- function() {
+    data(mpraSetExample)
+    checkTrue(validObject(mpraSetExample))
+}

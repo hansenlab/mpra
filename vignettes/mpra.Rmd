@@ -6,7 +6,7 @@ package: "`r pkg_ver('mpra')`"
 bibliography: mpra.bib
 abstract: >
   A comprehensive guide to using the mpra package for analyzing
-  massively parallel reporter assays
+  massively parallel reporter assays (MPRA).
 vignette: >
   %\VignetteIndexEntry{mpra User's Guide}
   %\VignetteEngine{knitr::rmarkdown}
@@ -155,8 +155,17 @@ The resulting fit object can be used with `topTable` from the `r Biocpkg("limma"
 
 ```{r}
 toptab <- topTable(mpralm_fit, coef = 2, number = Inf)
-head(toptab)
+toptab6 <- head(toptab)
 ```
+
+Because the element codes are rather long for this dataset, we do some tricks to print the top differential elements:
+
+```{r printToptab10}
+rownames(toptab6)
+rownames(toptab6) <- NULL
+toptab6
+```
+
 
 # Sessioninfo
 
