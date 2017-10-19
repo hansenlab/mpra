@@ -4,6 +4,7 @@ mpralm <- function(object, design, aggregate = c("mean", "sum", "none"),
                    plot = TRUE, ...) {
     .is_mpra_or_stop(object)
     
+    model_type <- match.arg(model_type)
     aggregate <- match.arg(aggregate)
     
     if (model_type=="indep_groups") {
