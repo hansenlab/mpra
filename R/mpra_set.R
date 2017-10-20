@@ -39,6 +39,7 @@ MPRASet <- function(DNA = new("matrix"), RNA = new("matrix"),
 setMethod("show", signature(object = "MPRASet"),
           function(object) {
     callNextMethod()
+    .show.barcodePresence(object)
 })
 
 getDNA <- function(object, aggregate = FALSE) {

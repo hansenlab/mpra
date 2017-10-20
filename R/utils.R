@@ -11,3 +11,10 @@
     else
         NULL
 }
+
+.show.barcodePresence <- function(object) {
+	if ("barcode" %in% names(rowData(object)))
+		cat("Barcodes present")
+	else
+		cat("No barcodes present")
+}
