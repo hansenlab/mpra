@@ -11,7 +11,10 @@ mpralm(object, design, aggregate = c("mean", "sum", "none"), normalize = TRUE,
 }
 \arguments{
   \item{object}{An object of class \code{MPRASet}.}
-  \item{design}{Design matrix specifying comparisons of interest.}
+  \item{design}{Design matrix specifying comparisons of interest. The 
+    number of rows of this matrix should equal the number of columns 
+    in \code{object}. The number of columns in this design matrix has 
+    no constraints and should correspond to the experimental design.}
   \item{aggregate}{Aggregation method over barcodes: \code{"mean"} to
     use the average of barcode-specific log ratios, \code{"sum"} to use
     the log ratio of summed RNA and DNA counts, \code{"none"} to perform
