@@ -3,6 +3,9 @@ mpralm <- function(object, design, aggregate = c("mean", "sum", "none"),
                    model_type = c("indep_groups", "corr_groups"),
                    plot = TRUE, ...) {
     .is_mpra_or_stop(object)
+    if (nrow(design) != ncol(object)) {
+        stop("Rows of design must correspond to the columns of object")
+    }
     
     model_type <- match.arg(model_type)
     aggregate <- match.arg(aggregate)
@@ -23,6 +26,10 @@ mpralm <- function(object, design, aggregate = c("mean", "sum", "none"),
 
 get_precision_weights <- function(logr, design, log_dna, span = 0.4,
                                   plot = TRUE, ...) {
+    if (nrow(design) != ncol(logr)) {
+        stop("Rows of design must correspond to the columns of logr")
+    }
+
     ## Obtain element-specific residual SDs
     fit <- lmFit(logr, design = design, ...)
     s <- fit$sigma
@@ -48,7 +55,10 @@ get_precision_weights <- function(logr, design, log_dna, span = 0.4,
 }
 
 compute_logratio <- function(object, aggregate = c("mean", "sum", "none")) {
+    .is_mpra_or_stop(object)
+
     aggregate <- match.arg(aggregate)
+
     if (aggregate=="sum") {
         dna <- getDNA(object, aggregate = TRUE)
         rna <- getRNA(object, aggregate = TRUE)
@@ -71,6 +81,8 @@ compute_logratio <- function(object, aggregate = c("mean", "sum", "none")) {
 }
 
 normalize_counts <- function(object, block = NULL) {
+    .is_mpra_or_stop(object)
+
     ## Perform total count normalization
     dna <- getDNA(object, aggregate = FALSE)
     rna <- getRNA(object, aggregate = FALSE)
@@ -98,6 +110,11 @@ normalize_counts <- function(object, block = NULL) {
 .fit_standard <- function(object, design, aggregate = c("mean", "sum", "none"),
                           normalize = TRUE, return_elist = FALSE,
                           return_weights = FALSE, plot = TRUE, span = 0.4, ...) {
+    .is_mpra_or_stop(object)
+    if (nrow(design) != ncol(object)) {
+        stop("Rows of design must correspond to the columns of object")
+    }
+
     aggregate <- match.arg(aggregate)
 
     if (normalize) {
@@ -126,6 +143,11 @@ normalize_counts <- function(object, block = NULL) {
 .fit_corr <- function(object, design, aggregate = c("mean", "sum", "none"),
                      normalize = TRUE, block = NULL, return_elist = FALSE,
                      return_weights = FALSE, plot = TRUE, span = 0.4, ...) {
+    .is_mpra_or_stop(object)
+    if (nrow(design) != ncol(object)) {
+        stop("Rows of design must correspond to the columns of object")
+    }
+
     aggregate <- match.arg(aggregate)
 
     if (normalize) {
