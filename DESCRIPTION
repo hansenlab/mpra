@@ -1,9 +1,9 @@
 Package: mpra
-Version: 1.4.0
+Version: 1.4.1
 Title: Analyze massively parallel reporter assays
 Description: Tools for data management, count preprocessing, and differential analysis in massively parallel report assays (MPRA).
 Authors@R: c(
-	   person("Leslie", "Myint", role = c("cre", "aut"), email = "lmyint1@jhu.edu"),
+	   person("Leslie", "Myint", role = c("cre", "aut"), email = "leslie.myint@gmail.com"),
 	   person(c("Kasper", "D."), "Hansen", role = "aut"))
 Depends:
 	R (>= 3.4.0),
