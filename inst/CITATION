@@ -6,9 +6,9 @@ c(bibentry(bibtype = "Article",
                person(c("Dimitrios", "G"), "Avramopoulos"),
                person(c("Loyal", "A"), "Goff"),
                person(c("Kasper", "D."), "Hansen")),
-           year = 2017,
-           journal = "bioRxiv",
-           pages = "196394",
-           doi = "10.1101/196394",
+           year = 2019,
+           journal = "BMC Genomics",
+           pages = "209",
+           doi = "10.1186/s12864-019-5556-x",
            header = "The mpralm functionality is described in:")
   )

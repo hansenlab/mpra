@@ -27,7 +27,7 @@ Maintainer: \packageMaintainer{mpra}
   D. Hansen.
   \emph{Linear models enable powerful differential activity analysis in
     massively parallel reporter assays}. 
-  bioRxiv 2017, 196394. \doi{10.1101/196394}.
+  BMC Genomics 2019, 209. \doi{10.1186/s12864-019-5556-x}.
 
   Law, Charity W., Yunshun Chen, Wei Shi, and Gordon K. Smyth.
   \emph{Voom: Precision Weights Unlock Linear Model Analysis Tools for RNA-Seq Read Counts}. 
