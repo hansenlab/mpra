@@ -2,7 +2,7 @@
 \title{mpra News}
 \encoding{UTF-8}
 
-\section{Version 1.5.2}{
+\section{Version 1.5.3}{
   \itemize{
     \item Update main paper citation.
     \item Update vignette with better examples for allelic studies.

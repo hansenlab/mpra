@@ -155,7 +155,7 @@ eseq <- replicate(E, paste(sample(c("A", "T", "C", "G"), 10, replace = TRUE), co
 With the relevant information defined, we can use the `MPRASet` constructor function as in the first example:
 
 ```{r}
-mpraset_example2 <- MPRASet(DNA = dna, RNA = rna, eid = eid, eseq = eseq, barcode = NULL)
+mpraset_example2 <- MPRASet(DNA = agg_dna, RNA = agg_rna, eid = eid, eseq = eseq, barcode = NULL)
 mpraset_example2
 ```
 
