@@ -17,7 +17,7 @@ output:
 
 # Introduction
 
-The `r Biocpkg("mpra")` package provides tools for the analysis of data from massively parallel reporter assays (MPRA).  Specifically, it contains the functionality described in [@mpralm].  The primary analysis purpose is to enable differential analysis of activity measures, but the package can also be used to generate precision weights useful in regression analyses of activity scores on sequence features. The main workhorse of the `r Biocpkg("mpra")` package is the `mpralm()` function which draws on the previously proposed voom framework for RNA-seq analysis [@voom]. In this document, we will be looking at MPRA data from a study comparing episomal and lentiviral versions of MPRA [@Inoue:2017].
+The `r Biocpkg("mpra")` package provides tools for the analysis of data from massively parallel reporter assays (MPRA).  Specifically, it contains the functionality described in [@mpralm].  The primary analysis purpose is to enable differential analysis of activity measures, but the package can also be used to generate precision weights useful in regression analyses of activity scores on sequence features. The main workhorse of the `r Biocpkg("mpra")` package is the `mpralm()` function which draws on the previously proposed voom framework for RNA-seq analysis [@voom]. In this document, we will be looking at MPRA data from a study comparing episomal and lentiviral versions of MPRA [@Inoue:2017]. We will also look at MPRA data from a study comparing the regulatory activity of different alleles of thousands of SNPs [@Tewhey:2016].
 
 ## How to cite
 
@@ -199,8 +199,24 @@ rownames(toptab6) <- NULL
 toptab6
 ```
 
+## Allelic comparison
 
-# Sessioninfo
+We will also demonstrate an allelic comparison analysis using the data in [@Tewhey:2016]. In this study, the investigators compare reference and alternate allele versions of sequences containing SNPs. These sequences were believed to be eQTLs based on previous work.
+
+We create a design matrix with an indicator for whether the counts come from the "B" allele (as opposed to the "A" allele). We also create an integer `block_vector` to indicate the actual sample that each column in the DNA and RNA count matrices comes from. In this case, columns 1 and 6 of the DNA and RNA count matrices come from sample 1 (the A and B alleles measured in transfection 1), columns 2 and 7 from sample 2, and so on. This information is needed to accurately model the within-sample correlation for a paired analysis.
+
+```{r, fig=TRUE}
+data(mpraSetAllelicExample)
+
+design <- data.frame(intcpt = 1, alleleB = grepl("allele_B", colnames(mpraSetAllelicExample)))
+block_vector <- rep(1:5, 2)
+mpralm_allele_fit <- mpralm(object = mpraSetAllelicExample, design = design, aggregate = "none", normalize = TRUE, block = block_vector, model_type = "corr_groups", plot = TRUE)
+
+toptab_allele <- topTable(mpralm_allele_fit, coef = 2, number = Inf)
+head(toptab_allele)
+```
+
+# Session Info
 
 ```{r sessionInfo, results='asis', echo=FALSE}
 sessionInfo()
