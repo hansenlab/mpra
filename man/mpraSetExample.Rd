@@ -48,7 +48,7 @@ data("mpraSetAllelicExample")
   Activity}. Genome Research 2017, 27(1):38-52.
   \doi{10.1101/gr.212092.116}.
 
-  Tewhey R, Kotliar D, Park DS, Liu B, Winnicki S, Reilly SK, Andersen KG, Mikkelsen TS, Lander ES, Schaffner SF, Sabeti PC. \emph{Direct Identification of Hundreds of Expression-Modulating Variants using a Multiplexed Reporter Assay}. Cell 2016, 165:1519–1529. \doi{10.1016/j.cell.2016.04.027}.
+  Tewhey R, Kotliar D, Park DS, Liu B, Winnicki S, Reilly SK, Andersen KG, Mikkelsen TS, Lander ES, Schaffner SF, Sabeti PC. \emph{Direct Identification of Hundreds of Expression-Modulating Variants using a Multiplexed Reporter Assay}. Cell 2016, 165:1519-1529. \doi{10.1016/j.cell.2016.04.027}.
 }
 \examples{
 data(mpraSetAggExample)
