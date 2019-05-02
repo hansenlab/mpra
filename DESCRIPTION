@@ -1,5 +1,5 @@
 Package: mpra
-Version: 1.6.0
+Version: 1.7.0
 Title: Analyze massively parallel reporter assays
 Description: Tools for data management, count preprocessing, and differential analysis in massively parallel report assays (MPRA).
 Authors@R: c(
