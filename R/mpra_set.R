@@ -22,11 +22,11 @@ MPRASet <- function(DNA = new("matrix"), RNA = new("matrix"),
                     barcode = new("character"), eid = new("character"),
                     eseq = new("character"), ...) {
     assays <- SimpleList(DNA = DNA, RNA = RNA)
-    if (is.null(barcode) & is.null(eseq)) {
+    if (length(barcode)==0 & length(eseq)==0) {
         rowData <- DataFrame(eid = eid)
-    } else if (is.null(barcode) & !is.null(eseq)) {
+    } else if (length(barcode)==0 & length(eseq)!=0) {
         rowData <- DataFrame(eid = eid, eseq = eseq)
-    } else if (!is.null(barcode) & is.null(eseq)) {
+    } else if (length(barcode)!=0 & length(eseq)==0) {
         rowData <- DataFrame(eid = eid, barcode = barcode)
     } else {
         rowData <- DataFrame(eid = eid, barcode = barcode, eseq = eseq)
