@@ -59,11 +59,13 @@ compute_logratio <- function(object, aggregate = c("mean", "sum", "none")) {
 
     aggregate <- match.arg(aggregate)
 
-    if (aggregate %in% c("sum", "none")) {
-        ## Do aggregation even with option "none" to ensure 
-        ## matching ordering of eids in logr and log_dna
+    if (aggregate=="sum")  {
         dna <- getDNA(object, aggregate = TRUE)
         rna <- getRNA(object, aggregate = TRUE)
+        logr <- log2(rna + 1) - log2(dna + 1)
+    } else if (aggregate == "none") {
+        dna <- getDNA(object, aggregate = FALSE)
+        rna <- getRNA(object, aggregate = FALSE)
         logr <- log2(rna + 1) - log2(dna + 1)
     } else if (aggregate=="mean") {
         dna <- getDNA(object, aggregate = FALSE)
