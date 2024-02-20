@@ -1,11 +1,5 @@
-# Massively parallel reporter assay analysis
+# mpralm adapted for allowing individual barcode input
 
-An R package that provides tools for differential analysis in MPRA studies.
-
-## Software status
-
-| Resource:     | Travis CI     |
-| ------------- | ------------------- |
-| _Platforms:_  | _Linux_       |
-| R CMD check   | <a href="https://travis-ci.org/hansenlab/mpra"><img src="https://travis-ci.org/hansenlab/mpra.svg" alt="Build status"></a> |
-| Test coverage | <a href="https://codecov.io/github/hansenlab/mpra?branch=master"><img src="https://codecov.io/github/hansenlab/mpra/coverage.svg?branch=master" alt="Coverage Status"/></a>   |                  |
+This is a fork from [the original mpralm package](https://github.com/hansenlab/mpra/tree/master), an R package that provides tools for differential analysis in MPRA studies.  
+The code has been modified to allow for using individual barcodes as input to the model.  
+In order to use individual barcodes, call the ``mpralm`` function with ``aggregate = "none"`` and indicate in the passed ``block`` argument which replicate each barcode belongs to. 
