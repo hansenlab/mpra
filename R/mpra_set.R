@@ -21,6 +21,9 @@ setValidity("MPRASet", function(object) {
 MPRASet <- function(DNA = new("matrix"), RNA = new("matrix"),
                     barcode = new("character"), eid = new("character"),
                     eseq = new("character"), ...) {
+	eid <- eid[order(eid)]
+	DNA <- DNA[order(rownames(DNA)), ]
+	RNA <- RNA[order(rownames(RNA)), ]
     assays <- SimpleList(DNA = DNA, RNA = RNA)
     if (length(barcode)==0 & length(eseq)==0) {
         rowData <- DataFrame(eid = eid)
@@ -46,12 +49,14 @@ getDNA <- function(object, aggregate = FALSE) {
     .is_mpra_or_stop(object)
     raw <- assay(object, "DNA")
     if (aggregate) {
-        eid <- getEid(object)
+		eid <- getEid(object)
         by_out <- by(raw, eid, colSums, na.rm = FALSE)
         agg <- do.call("rbind", by_out)
         rownames(agg) <- names(by_out)
+		agg <- agg[order(rownames(agg)), ]
         return(agg)
     } else {
+		raw <- raw[order(rownames(raw)), ]
         return(raw)
     }
 }
@@ -60,12 +65,14 @@ getRNA <- function(object, aggregate = FALSE) {
     .is_mpra_or_stop(object)
     raw <- assay(object, "RNA")
     if (aggregate) {
-        eid <- getEid(object)
+    	eid <- getEid(object)
         by_out <- by(raw, eid, colSums, na.rm = FALSE)
         agg <- do.call("rbind", by_out)
         rownames(agg) <- names(by_out)
+        agg <- agg[order(rownames(agg)), ]
         return(agg)
     } else {
+		raw <- raw[order(rownames(raw)), ]
         return(raw)
     }
 }
