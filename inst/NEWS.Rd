@@ -2,6 +2,12 @@
 \title{mpra News}
 \encoding{UTF-8}
 
+\section{Version 1.26.1}{
+  \itemize{
+    \item Pass in block vector in normalize_counts() call in .fit() functions
+  }
+}
+
 \section{Version 1.12.1}{
   \itemize{
     \item Fix argument checking in MPRASet construction to allow users to not have to specify barcode or eseq.
