@@ -116,7 +116,7 @@ normalize_counts <- function(object, block = NULL) {
     aggregate <- match.arg(aggregate)
 
     if (normalize) {
-        object <- normalize_counts(object)
+        object <- normalize_counts(object, block)
     }
     logr <- compute_logratio(object, aggregate = aggregate)
     log_dna <- log2(getDNA(object, aggregate = TRUE) + 1)
@@ -149,7 +149,7 @@ normalize_counts <- function(object, block = NULL) {
     aggregate <- match.arg(aggregate)
 
     if (normalize) {
-        object <- normalize_counts(object)
+        object <- normalize_counts(object, block)
     }
     logr <- compute_logratio(object, aggregate = aggregate)
     log_dna <- log2(getDNA(object, aggregate = TRUE) + 1)
