@@ -1,7 +1,9 @@
 mpralm <- function(object, design, aggregate = c("mean", "sum", "none"),
                    normalize = TRUE, block = NULL,
                    model_type = c("indep_groups", "corr_groups"),
-                   plot = TRUE, ...) {
+                   plot = TRUE,
+                   endomorphic = FALSE,
+                   ...) {
     .is_mpra_or_stop(object)
     if (nrow(design) != ncol(object)) {
         stop("Rows of design must correspond to the columns of object")
@@ -21,7 +23,17 @@ mpralm <- function(object, design, aggregate = c("mean", "sum", "none"),
         fit <- .fit_corr(object = object, design = design, aggregate = aggregate,
                          normalize = normalize, block = block, plot = plot, ...)
     }
-    return(fit)
+
+    # what type of object to return
+    if (endomorphic) {
+      attr(object, "MArrayLM") <- fit
+      tt <- topTable(fit, ..., number=nrow(fit), sort.by="none")
+      stopifnot(all.equal(rowData(object)$eid, rownames(tt)))
+      rowData(object) <- cbind(rowData(object), tt)
+      return(object)
+    } else {
+      return(fit)
+    }
 }
 
 get_precision_weights <- function(logr, design, log_dna, span = 0.4,

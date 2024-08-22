@@ -1,4 +1,5 @@
-library(mpra)
+# library(mpra)
+devtools::load_all()
 data(mpraSetExample)
 m <- mpraSetExample
 
@@ -22,10 +23,13 @@ fit <- mpralm(
   aggregate = "sum",
   normalize = TRUE,
   model_type = "indep_groups",
-  plot = FALSE
+  plot = FALSE,
+  endomorphic = TRUE,
+  coef = 2
 )
 
-class(fit)
+# previously, an MArrayLM object
+class(fit) # MPRASet object
 
-tab <- topTable(fit, coef = 2, number = Inf)
+tab <- topTable(attr(fit, "MArrayLM"), coef = 2, number = Inf)
 head(tab)
