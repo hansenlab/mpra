@@ -26,13 +26,14 @@ mpralm <- function(object, design, aggregate = c("mean", "sum", "none"),
 
     # what type of object to return
     if (endomorphic) {
-      attr(object, "MArrayLM") <- fit
-      tt <- topTable(fit, ..., number=nrow(fit), sort.by="none")
-      stopifnot(all.equal(rowData(object)$eid, rownames(tt)))
-      rowData(object) <- cbind(rowData(object), tt)
-      return(object)
+        attr(object, "MArrayLM") <- fit
+        tt <- topTable(fit, ..., number=nrow(fit), sort.by="none")
+        stopifnot(all(rownames(tt) %in% rowData(object)$eid))
+        tt <- tt[rowData(object)$eid, ]
+        rowData(object) <- cbind(rowData(object), tt)
+        return(object)
     } else {
-      return(fit)
+        return(fit)
     }
 }
 
