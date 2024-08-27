@@ -26,6 +26,17 @@ mpralm <- function(object, design, aggregate = c("mean", "sum", "none"),
 
     # what type of object to return
     if (endomorphic) {
+        if (aggregate != "none") {
+            dna <- getDNA(object, aggregate = TRUE)
+            rna <- getRNA(object, aggregate = TRUE)
+            object <- object[!duplicated(rowData(object)$eid),]
+            rownames(object) <- rowData(object)$eid
+            rowData(object)$barcode <- NULL
+            assay(object, "DNA") <- dna[rowData(object)$eid,]
+            assay(object, "RNA") <- rna[rowData(object)$eid,]
+            if (ncol(rowData(object)) > 1)
+                message("rowData columns preserved, using first occurence of each eid")
+        }
         attr(object, "MArrayLM") <- fit
         tt <- topTable(fit, ..., number=nrow(fit), sort.by="none")
         stopifnot(all(rownames(tt) %in% rowData(object)$eid))

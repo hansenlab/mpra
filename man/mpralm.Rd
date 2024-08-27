@@ -7,7 +7,7 @@ Fits weighted linear models to test for differential activity in MPRA data.
 \usage{
 mpralm(object, design, aggregate = c("mean", "sum", "none"), normalize = TRUE,
        block = NULL, model_type = c("indep_groups", "corr_groups"),
-       plot = TRUE, ...)
+       plot = TRUE, endomorphic = FALSE, ...)
 }
 \arguments{
   \item{object}{An object of class \code{MPRASet}.}
@@ -28,6 +28,8 @@ mpralm(object, design, aggregate = c("mean", "sum", "none"), normalize = TRUE,
     (\code{"indep_groups"}) or a paired mixed-model fit
     ((\code{"corr_groups"})) should be used.}
   \item{plot}{If \code{TRUE}, plot the mean-variance relationship.}
+  \item{endomorphic}{If \code{TRUE}, return the same class as the input,
+    i.e. an object of class \code{MPRASet}.}
   \item{\dots}{Further arguments to be passed to \code{lmFit} for
     obtaining residual standard deviations used in estimating the
     mean-variance relationship.} 
@@ -39,7 +41,12 @@ estimate the intra-replicate correlation of log-ratio values.
 }
 \value{
 An object of class \code{MArrayLM} resulting from the \code{eBayes}
-function. 
+function.
+
+If \code{endomorphic = TRUE}, then an \code{MPRASet} is returned,
+with the output of \code{topTable} added to the \code{rowData},
+and the \code{MArrayLM} results added as an attribute
+\code{"MArrayLM"}.
 }
 \references{
   Myint, Leslie, Dimitrios G. Avramopoulos, Loyal A. Goff, and Kasper

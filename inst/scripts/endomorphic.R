@@ -10,8 +10,7 @@ random_ids <- apply(
                   replace = TRUE), ncol=10),
     1, paste0, collapse="")
 
-#rowData(m)$eid <- as.numeric(factor(rowData(m)$eid))
-#rowData(m)$eid <- random_ids[ rowData(m)$eid ]
+rowData(m)$old_eid <- rowData(m)$eid
 rowData(m)$eid <- paste0("e",seq_len(nrow(m)))
 rowData(m)$score <- rnorm(nrow(m))
 rowData(m)
@@ -27,3 +26,21 @@ class(fit) # MPRASet object
 
 tab <- topTable(attr(fit, "MArrayLM"), coef = 2, number = Inf)
 head(tab)
+
+all.equal(tab[mcols(fit)$eid,"logFC"], mcols(fit)$logFC)
+
+# now try it with aggregation
+rowData(m)$eid <- rowData(m)$old_eid
+rowData(m)$eid <- as.numeric(factor(rowData(m)$eid))
+rowData(m)$eid <- random_ids[ rowData(m)$eid ]
+
+fit <- mpralm(object = m, design = design, aggregate = "sum",
+              normalize = TRUE, model_type = "indep_groups",
+              plot = FALSE, endomorphic = TRUE, coef = 2)
+
+class(fit) # MPRASet object
+
+tab <- topTable(attr(fit, "MArrayLM"), coef = 2, number = Inf)
+head(tab)
+
+all.equal(tab[mcols(fit)$eid,"logFC"], mcols(fit)$logFC)
