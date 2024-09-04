@@ -2,15 +2,10 @@
 devtools::load_all()
 data(mpraSetExample)
 m <- mpraSetExample[1:10000,] # for speed
-
 colData(m)$condition <- factor(c("MT","MT","MT","WT","WT","WT"),
                                levels=c("WT","MT"))
-random_ids <- apply(
-    matrix(sample(letters, 10 * length(unique(rowData(m)$eid)),
-                  replace = TRUE), ncol=10),
-    1, paste0, collapse="")
 
-rowData(m)$old_eid <- rowData(m)$eid
+# no aggregation
 rowData(m)$eid <- paste0("e",seq_len(nrow(m)))
 rowData(m)$score <- rnorm(nrow(m))
 rowData(m)
@@ -27,12 +22,14 @@ class(fit) # MPRASet object
 tab <- topTable(attr(fit, "MArrayLM"), coef = 2, number = Inf)
 head(tab)
 
-all.equal(tab[mcols(fit)$eid,"logFC"], mcols(fit)$logFC)
+all.equal(tab[rowData(fit)$eid,"logFC"], rowData(fit)$logFC)
 
 # now try it with aggregation
-rowData(m)$eid <- rowData(m)$old_eid
-rowData(m)$eid <- as.numeric(factor(rowData(m)$eid))
-rowData(m)$eid <- random_ids[ rowData(m)$eid ]
+data(mpraSetExample)
+m <- mpraSetExample[1:10000,] # for speed
+colData(m)$condition <- factor(c("MT","MT","MT","WT","WT","WT"),
+                               levels=c("WT","MT"))
+rowData(m)$eid <- paste("e",as.numeric(factor(rowData(m)$eid)))
 
 fit <- mpralm(object = m, design = design, aggregate = "sum",
               normalize = TRUE, model_type = "indep_groups",
@@ -43,4 +40,4 @@ class(fit) # MPRASet object
 tab <- topTable(attr(fit, "MArrayLM"), coef = 2, number = Inf)
 head(tab)
 
-all.equal(tab[mcols(fit)$eid,"logFC"], mcols(fit)$logFC)
+all.equal(tab[rowData(fit)$eid,"logFC"], rowData(fit)$logFC)

@@ -5,7 +5,8 @@
 Fits weighted linear models to test for differential activity in MPRA data.
 }
 \usage{
-mpralm(object, design, aggregate = c("mean", "sum", "none"), normalize = TRUE,
+mpralm(object, design, aggregate = c("mean", "sum", "none"),
+       normalize = TRUE, normalizeSize = 10e6,
        block = NULL, model_type = c("indep_groups", "corr_groups"),
        plot = TRUE, endomorphic = FALSE, ...)
 }
@@ -21,6 +22,8 @@ mpralm(object, design, aggregate = c("mean", "sum", "none"), normalize = TRUE,
     no aggregation (counts have already been summarized over barcodes).}
   \item{normalize}{If \code{TRUE}, perform total count normalization
     before model fitting.}
+  \item{normalizeSize}{If normalizing, the target library size (default
+    is 10e6).}
   \item{block}{A vector giving the sample designations of the columns of
     \code{object}. The default, \code{NULL}, indicates that all columns
     are separate samples.} 
@@ -59,7 +62,7 @@ and the \code{MArrayLM} results added as an attribute
   \emph{Voom: Precision Weights Unlock Linear Model Analysis Tools for RNA-Seq Read Counts}. 
   Genome Biology 2014, 15:R29. \doi{10.1186/gb-2014-15-2-r29}.
 
-  Smyth, Gordon K., Jo\"{e}lle Michaud, and Hamish S. Scott. 
+  Smyth, Gordon K., Joelle Michaud, and Hamish S. Scott. 
   \emph{Use of within-Array Replicate Spots for Assessing Differential
     Expression in Microarray Experiments.} 
   Bioinformatics 2005, 21 (9): 2067-75. \doi{10.1093/bioinformatics/bti270}.
