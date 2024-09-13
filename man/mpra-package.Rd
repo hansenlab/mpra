@@ -33,7 +33,7 @@ Maintainer: \packageMaintainer{mpra}
   \emph{Voom: Precision Weights Unlock Linear Model Analysis Tools for RNA-Seq Read Counts}. 
   Genome Biology 2014, 15:R29. \doi{10.1186/gb-2014-15-2-r29}.
 
-  Smyth, Gordon K., Jo\"{e}lle Michaud, and Hamish S. Scott. 
+  Smyth, Gordon K., Joelle Michaud, and Hamish S. Scott. 
   \emph{Use of within-Array Replicate Spots for Assessing Differential
     Expression in Microarray Experiments.} 
   Bioinformatics 2005, 21 (9): 2067-75. \doi{10.1093/bioinformatics/bti270}.

@@ -216,6 +216,51 @@ toptab_allele <- topTable(mpralm_allele_fit, coef = 2, number = Inf)
 head(toptab_allele)
 ```
 
+## Returning an MPRASet
+
+The last section notes an option `endomorphic = TRUE` that changes the
+type of object returned by `mpralm` from an *MArrayLM* object to the
+original object, an *MPRASet* with the statistical results attached as
+`rowData` to the object. "Endomorphic" refers to the fact that the
+same type of object that is passed into the function is returned, but
+with additional information added.
+
+We can demonstrate with the example from above: 
+
+```{r}
+design <- data.frame(intcpt = 1,
+                     episomal = grepl("MT", colnames(mpraSetExample)))
+efit <- mpralm(object = mpraSetExample,
+               design = design,
+               aggregate = "sum",
+               normalize = TRUE,
+               model_type = "indep_groups",
+               plot = FALSE,
+               endomorphic = TRUE, coef = 2)
+# for ease of printing, because 'eid' are long here
+rownames(efit) <- paste0("elem_", seq_len(nrow(efit)))
+rowData(efit)
+```
+
+The `coef = 2` is passed to `topTable` which is run within `mpralm`.
+This option also returns `scaledDNA` and `scaledRNA` that were used to
+compute log ratios within `mpralm`. This can facilitate plotting
+statistics alongside original or scaled count data. 
+
+Just to demonstrate that the scaled counts were in fact the ones used
+for statistics, we can compute the raw LFC and compare to the LFC
+computed by *limma-voom* using precision weights.
+
+```{r}
+sdna <- assay(efit, "scaledDNA")
+srna <- assay(efit, "scaledRNA")
+mt <- rowMeans(log2(srna[,1:3] + 1) - log2(sdna[,1:3] + 1))
+wt <- rowMeans(log2(srna[,4:6] + 1) - log2(sdna[,4:6] + 1))
+raw_lfc <- mt - wt
+# very similar, precision weights modify LFC from limma a bit
+lm(raw_lfc ~ rowData(efit)$logFC)
+```
+
 # Session Info
 
 ```{r sessionInfo, results='asis', echo=FALSE}
@@ -223,5 +268,3 @@ sessionInfo()
 ```
 
 # References
-
-
