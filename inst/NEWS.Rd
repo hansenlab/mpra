@@ -2,6 +2,13 @@
 \title{mpra News}
 \encoding{UTF-8}
 
+\section{Version 1.27.2}{
+  \itemize{
+    \item Add endomorphic option to return MPRASet as a final result
+    \item Add library size default option for normalization
+  }
+}
+
 \section{Version 1.26.1}{
   \itemize{
     \item Pass in block vector in normalize_counts() call in .fit() functions
