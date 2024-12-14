@@ -21,6 +21,8 @@ setValidity("MPRASet", function(object) {
 MPRASet <- function(DNA = new("matrix"), RNA = new("matrix"),
                     barcode = new("character"), eid = new("character"),
                     eseq = new("character"), ...) {
+	DNA <- DNA[eid,]
+	RNA <- RNA[eid,]
     assays <- SimpleList(DNA = DNA, RNA = RNA)
     if (length(barcode)==0 & length(eseq)==0) {
         rowData <- DataFrame(eid = eid)
